@@ -1,0 +1,35 @@
+# Marked Blog Config
+
+# Site
+title: StanZhai::Blog
+subtitle: 好记性不如烂键盘！
+description: 翟士丹的技术博客，爱编码，爱生活，有梦想，不抱怨。
+author: StanZhai 翟士丹
+email: jasondan325@163.com
+language: zh-CN
+
+# Url
+url: http://blog.zhaishidan.cn
+root: /
+permalink: :year/:month/:day/:title/
+
+# Database
+## Marked Blog uses MongoDB as database server
+## For Dev: mongodb://<user>:<password>@widmore.mongohq.com:10010/MarkedBlog
+mongodb:
+  host: widmore.mongohq.com
+  port: 10010
+  db_name: MarkedBlog
+  user_name: stan
+  password: stan
+
+# Server
+## Marked Blog uses Connect as a server
+## You can customize the logger format as defined in
+## http://www.senchalabs.org/connect/logger.html
+port: 4000
+logger: false
+logger_format:
+
+# Theme
+theme: light
