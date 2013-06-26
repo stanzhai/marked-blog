@@ -13,9 +13,9 @@ var express = require('express')
   , User = require('./models').User
   , UserDao = require('./dao').UserDao;
 
-UserDao.create(new User({uid: 'zsd', name: 'zsd', email: 'jasondan325@163.com'}), function (doc) {
-  console.log(doc);
-});
+// UserDao.create(new User({uid: 'zsd', name: 'zsd', email: 'jasondan325@163.com'}), function (doc) {
+//   console.log(doc);
+// });
 
 var app = express();
 
@@ -43,5 +43,5 @@ admin(app);
 routes(app);
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+  console.log('marked-blog server listening on port ' + app.get('port'));
 });

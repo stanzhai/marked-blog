@@ -1,0 +1,54 @@
+<p>﻿title: C++操作SQL Server数据库
+date: 2013-03-19
+categories: 问题修复</p>
+<h2>tags: [C++, SQLServer]</h2>
+<h2>前期准备</h2>
+<ol>
+<li>导入库</li>
+</ol>
+<pre><code><figure class="highlight"><pre>    <span class="special">#</span>import "c:<span class="command">\Program</span> Files<span class="command">\Common</span> Files<span class="command">\System</span><span class="command">\ADO</span><span class="command">\msado</span>15.dll" <span class="command">\
+</span>    no_namespace rename("EOF", "EndOfFile")
+</pre></figure></code></pre>
+<!-- more -->
+
+<ol>
+<li><p>COM初始化（进程级使用只需初始化一次，如果在线程中使用，则在线程函数中每次执行初始化）</p>
+<p> ::CoInitialize(NULL);</p>
+</li>
+<li><p>关键变量</p>
+<p> _ConnectionPtr m_pConnection;</p>
+</li>
+</ol>
+<h2>简单实例</h2>
+<pre><code><figure class="highlight"><pre>m_pConnection.CreateInstance(<span class="string">"ADODB.Connection"</span>);
+m_pConnection-&gt;Open(connStr,<span class="string">""</span>,<span class="string">""</span>,adModeUnknown);
+char query_cmd[<span class="number">500</span>] = {<span class="number">0</span>};
+
+<span class="keyword">...</span>
+
+m_pConnection-&gt;Execute(query_cmd,<span class="literal">NULL</span>,<span class="number">1</span>); //用Execute执行sql语句来执行写入
+m_pConnection-&gt;Close();
+</pre></figure></code></pre>
+<h2>常见错误<code>_com_error</code>的处理</h2>
+<p>使用try catch语句捕获异常信息，确定错误原因：</p>
+<pre><code><figure class="highlight"><pre><span class="keyword">try</span>
+<span class="tuple">{
+    m_p<span class="variable">Connection</span>-&gt;<span class="variable">Execute</span>(query_cmd,<span class="variable">NULL</span>,<span class="number">1</span>);
+}</span>
+<span class="function"><span class="title">catch</span><span class="params">(<span class="variable">_</span>com_error&amp; e)</span>
+{
+    M<span class="title">essageBox</span><span class="params">(<span class="variable">NULL</span>, e.<span class="variable">Description</span>()</span>, <span class="title">e</span>.E<span class="title">rrorMessage</span><span class="params">()</span>, MB_ICONERROR);
+    <span class="title">return</span>;
+}
+</pre></figure></code></pre>
+<h2>一个恶心的Bug，更新于[2013,6,3]</h2>
+<p>最近同事使用上述代码操作数据，在Win7和Windows Server 2008R2上运行OK，当拿到XP或者Windows 2003上去跑，遇到如下错误：</p>
+<pre><code><figure class="highlight"><pre>This <span class="type">application</span> has requested <span class="keyword">the</span> Runtime <span class="keyword">to</span> terminate <span class="keyword">it</span> <span class="keyword">in</span> an unusual way. Please contact <span class="keyword">the</span> <span class="type">application</span>'s support team <span class="keyword">for</span> more information.
+</pre></figure></code></pre>
+<p>我们各种排查，最后找出原因为：</p>
+<blockquote>
+<p>WIN7的ado15.dll与其他系统不兼容！！！拷贝个XP的ado15.dll到WIN7下在编译，或者直接把工程移到XP下重新编译一次；</p>
+<p>这个问题，好像从vista开始就对msado15.dll进行了扩展，悲催的是前后不兼容。 </p>
+</blockquote>
+<p>最终我们没动一行代码，在Win2003上重新编译，就可以在xp上跑了。此时，解决这个问题我们已经花费了3个多小时，对于这个错误原因，我表示真的很蛋疼！！！！</p>
+<p>做个文明人，这里就不骂微软了。</p>
