@@ -28,6 +28,8 @@ app.set('views', viewFolder);
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
+app.use(express.cookieParser());
+app.use(express.session({ secret: 'marked-blog' }));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(require('stylus').middleware(publicFolder));
