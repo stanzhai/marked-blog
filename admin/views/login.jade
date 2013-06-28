@@ -1,7 +1,16 @@
-extends layout
-
-block content
-  form(method='post')
-    input(name='user')
-    input(name='password', type='password')
-    input(type='submit', value='登录')
+doctype 5
+html
+  head
+    title 系统登录
+    link(rel='stylesheet', href='/admin/stylesheets/login.css')
+  body
+    div#content
+      p#logo
+        img(src='/admin/images/logo.jpg')
+      form(method='post')
+        span.input-wrap
+          input#user-name(name='user')
+        span.input-wrap
+          input#password(name='password', type='password')
+        input#login(type='submit', value='登  录')
+    div#footer (C) 2013 marked-blog

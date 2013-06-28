@@ -1,0 +1,68 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+body #content {
+  margin: 150px auto 50px auto;
+  text-align: center;
+}
+body #content #logo {
+  padding: 0;
+  margin: 30px auto;
+}
+body #content #logo img {
+  border: none;
+}
+body #msg {
+  color: #f00;
+  font-size: 12px;
+  margin-top: 30px;
+  height: 15px;
+}
+body #footer {
+  text-align: center;
+  font-size: 12px;
+}
+body * {
+  font-family: Arial;
+}
+.input-wrap {
+  width: 180px;
+  height: 30px;
+  display: inline-block;
+  margin-right: 5px;
+  background: url("../images/logon_rel.png") no-repeat -304px 0;
+  border: 1px solid #b6b6b6;
+  border-color: #7b7b7b #b6b6b6 #b6b6b6 #7b7b7b;
+  vertical-align: top;
+}
+#user-name,
+#password {
+  border: 0;
+  color: #333;
+  display: inline-block;
+  font-size: 15px;
+  height: 25px;
+  width: 165px;
+  line-height: 25px;
+  margin: 2px 8px 0 2px;
+  padding-left: 8px;
+  vertical-align: top;
+  outline: none;
+}
+#login {
+  width: 95px;
+  height: 32px;
+  padding-top: 2px;
+  font-size: 14px;
+  padding: 0;
+  background: #ddd url("../images/logon_rel.png");
+  border: 0;
+  cursor: pointer;
+}
+#login:hover {
+  background-position: -100px 0px;
+}
+.watermark {
+  color: #999 !important;
+}
