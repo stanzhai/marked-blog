@@ -31,7 +31,7 @@ body * {
   height: 30px;
   display: inline-block;
   margin-right: 5px;
-  background: url("../images/logon_rel.png") no-repeat -304px 0;
+  background: url("../img/logon_rel.png") no-repeat -304px 0;
   border: 1px solid #b6b6b6;
   border-color: #7b7b7b #b6b6b6 #b6b6b6 #7b7b7b;
   vertical-align: top;
@@ -56,7 +56,7 @@ body * {
   padding-top: 2px;
   font-size: 14px;
   padding: 0;
-  background: #ddd url("../images/logon_rel.png");
+  background: #ddd url("../img/logon_rel.png");
   border: 0;
   cursor: pointer;
 }

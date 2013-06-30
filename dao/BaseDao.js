@@ -3,10 +3,14 @@ function BaseDao (Model){
 }
 
 // create
-BaseDao.prototype.create = function (doc,callback){
-  this.model.create(doc, function (error) {
+BaseDao.prototype.create = function (doc, callback){
+  var model = this.model;
+  model.create(doc, function (error) {
     if(error) return callback(error);
-    return callback(doc);
+    model.findOne(doc, function (error, data) {
+      if (error) return callback(error);
+      return callback(data);
+    })
   });
 };
 
@@ -26,8 +30,14 @@ BaseDao.prototype.countByQuery = function (query, callback) {
   });
 };
 
+BaseDao.prototype.findOne = function (query, callback) {
+  this.model.findOne(query, function(error, model){
+    if(error) return callback(error,null);
+    return callback(null,model);
+  });
+};
 
-BaseDao.prototype.getByQuery = function (query,fileds,opt,callback) {
+BaseDao.prototype.find = function (query,fileds,opt,callback) {
   this.model.find(query, fileds, opt, function(error,model){
     if(error) return callback(error,null);
 

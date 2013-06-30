@@ -1,0 +1,12 @@
+{
+  "close": "关闭",
+  "add": "添加",
+  "opt": "操作",
+  "edit": "编辑",
+  "save": "保存",
+  "delete": "删除",
+
+  "cateName": "分类名",
+  "cateDes": "描述",
+  "addCate": "添加分类"
+}

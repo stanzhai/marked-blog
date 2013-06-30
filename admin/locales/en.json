@@ -1,0 +1,12 @@
+{
+  "close": "Close",
+  "opt": "Operate",
+  "add": "Add",
+  "edit": "Edit",
+  "delete": "Delete",
+  "save": "Save",
+  
+  "cateName": "Category Name",
+  "cateDes": "Description",
+  "addCate": "Add Category",
+}

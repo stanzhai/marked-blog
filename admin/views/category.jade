@@ -1,0 +1,113 @@
+extends layout
+
+block header
+  script(type="text/javascript", src="/admin/js/knockout-2.2.1.js")
+  script(type="text/javascript")
+    
+    $(function () {
+
+      function Category(data) {
+        var self = this;
+        if (data == undefined) {
+          data = { _id: '', name: '', description: ''};
+        }
+        self._id = ko.observable(data._id);
+        self.name = ko.observable(data.name);
+        self.description = ko.observable(data.description);
+      }
+
+      function CateListViewModel() {
+        var self = this;
+        self.categories = ko.observableArray([]);
+        self.category = ko.observable(new Category());
+
+        self.edit = function(cate) {
+          self.category(cate);
+        }
+
+        self.delete = function(cate) {
+          alert(cate._id());
+          $.ajax({url: '/category', data: { _id: cate._id() }, success: function () {
+            self.categories.remove(cate);
+          }, type: 'delete'});
+        };
+
+        self.saveOrUpdate = function () {
+          var jsonObj = ko.toJSON(self.category());
+          var data = JSON.parse(jsonObj);
+          if (self.category()._id() != '') {
+            $.ajax({url: '/category', data: data, success: function () {
+
+            }, type: 'put'});
+          } else {
+            // add new category
+            $.post('/category', data, function (result) {
+              self.categories.push(new Category(result));
+            });
+          }
+        };
+
+        $.getJSON("/categoryList", function(allData) {
+            var mappedCategories = $.map(allData, function(item) { return new Category(item) });
+            self.categories(mappedCategories);
+        });  
+      };
+      var cateViewModel = new CateListViewModel();
+      ko.applyBindings(cateViewModel);
+
+      $('#add').click(function () {
+        cateViewModel.category(new Category());
+      });
+      $('#save').click(function () {
+        $('form').submit();
+      });
+    });
+
+block content
+  // display category list
+  table.table.table-bordered.table-striped
+    thead
+      tr
+        th(style="width: 30%") #{__('cateName')}
+        th #{__('cateDes')}
+        th(style="width: 10%") #{__('opt')}
+    tbody(data-bind="foreach: categories, visible: categories().length > 0")
+      tr
+        td(data-bind="text: name")
+        td(data-bind="text: description")
+        td
+          div.btn-group
+            a.edit.btn.btn-small(href="#", data-bind="click: $parent.edit", data-toggle="modal", data-target="#editCategory") 
+              i.icon-edit
+              &nbsp;#{__('edit')}
+            button.btn.btn-small.dropdown-toggle(data-toggle="dropdown")
+              span.caret
+            ul.dropdown-menu.pull-right
+              li
+                a.delete(href="#", data-bind="click: $parent.delete")
+                  i.icon-remove-sign
+                  &nbsp;#{__('delete')}
+
+  // add category
+  button.btn#add(data-toggle="modal", data-target="#editCategory")
+    i.icon-plus-sign
+    &nbsp;#{__('addCate')}
+
+  // category edit modal dialog
+  div#editCategory.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="modalLabel", aria-hidden="true")
+    div.modal-header
+      button.close(data-dismiss="modal", aria-hidden="true") &times;
+      h3#modalLabel 编辑分类
+    div.modal-body
+      form.form-horizontal(data-bind="submit: $root.saveOrUpdate")
+        input(type="hidden", data-bind="value: category()._id")
+        div.control-group
+          label.control-label(for="cateName") #{__('cateName')}
+          div.controls
+            input#cateName(type="text", placeholder="#{__('cateName')}", data-bind="value: category().name")
+        div.control-group
+          label.control-label(for="cateDes") #{__('cateDes')}
+          div.controls
+            input#cateDes(type="text", placeholder="#{__('cateDes')}", data-bind="value: category().description")
+    div.modal-footer
+      a#save.btn.btn-primary(href="#", data-dismiss="modal") #{__('save')}

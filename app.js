@@ -10,10 +10,10 @@ var express = require('express')
   , path = require('path')
   , admin = require('./admin')
   , config = require('./config.yml')
-  , User = require('./models').User
-  , UserDao = require('./dao').UserDao;
+  , Category = require('./models').Category
+  , CategoryDao = require('./dao').CategoryDao;
 
-// UserDao.create(new User({uid: 'zsd', name: 'zsd', email: 'jasondan325@163.com'}), function (doc) {
+// CategoryDao.create(new Category({name: 'zsd', description: 'jasondan325@163.com'}), function (doc) {
 //   console.log(doc);
 // });
 
