@@ -8,5 +8,6 @@
 
   "cateName": "分类名",
   "cateDes": "描述",
-  "addCate": "添加分类"
+  "addCate": "添加分类",
+  "confirmDel": "您确定要删除"
 }

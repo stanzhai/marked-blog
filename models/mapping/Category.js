@@ -8,7 +8,7 @@ var mongoose = require('mongoose')
 
 
 var Category = new Schema({
-    name: {type: String, index: true}
+    name: {type: String, index: true, unique: true}
   , description: {type: String}
   , posts_id: [ObjectId]
 });

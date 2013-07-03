@@ -26,10 +26,11 @@ block header
         }
 
         self.delete = function(cate) {
-          alert(cate._id());
-          $.ajax({url: '/category', data: { _id: cate._id() }, success: function () {
-            self.categories.remove(cate);
-          }, type: 'delete'});
+          if (confirm("#{__('confirmDel')} " + cate.name() + ' ？')) {
+            $.ajax({url: '/category', data: { _id: cate._id() }, success: function () {
+              self.categories.remove(cate);
+            }, type: 'delete'});
+          }
         };
 
         self.saveOrUpdate = function () {
