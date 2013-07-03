@@ -1,6 +1,6 @@
 
 /*
- * Login logic
+ * Category Logic
  */
 var yaml = require('yamljs')
   , config = require('../../config.yml')
@@ -23,21 +23,40 @@ exports.list = function(req, res){
 // add category
 exports.create = function(req, res) {
   var category = new Category(req.body);
-  CategoryDao.create(category, function (result) {
-    console.log(result);
-    res.send(result);
-  })
+
+  CategoryDao.count({name: category.name}, function (err, data) {
+    if (data > 0) {
+      res.status(500).send({msg: res.__('cateDuplicate') + newCategory.name });
+    } else {
+      CategoryDao.create(category, function (result) {
+        res.send(result);
+      });
+    }
+  });
+
 };
 
 // edit category 
 exports.edit = function (req, res) {
   var newCategory = req.body;
-  CategoryDao.update({ _id: newCategory._id }, 
-    {$set: {name: newCategory.name, description: newCategory.description }}, 
-    false, 
-    function (err) {
-      res.send('ok');
+
+  CategoryDao.count({name: newCategory.name, _id: { $ne: newCategory._id }}, function (err, data) {
+    if (data > 0) {
+      res.status(500).send({msg: res.__('cateDuplicate') + newCategory.name });
+    } else {
+      CategoryDao.update({ _id: newCategory._id }, 
+        {$set: {name: newCategory.name, description: newCategory.description }}, 
+        false, 
+        function (err) {
+          if (err) {
+            res.status(500).send({ msg: err });
+          } else {
+            res.send('ok');
+          }
+      });
+    }
   });
+
 }
 
 exports.delete = function (req, res) {

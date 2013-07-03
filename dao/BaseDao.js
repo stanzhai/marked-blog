@@ -23,7 +23,7 @@ BaseDao.prototype.getById = function (id, callback) {
 };
 
 
-BaseDao.prototype.countByQuery = function (query, callback) {
+BaseDao.prototype.count = function (query, callback) {
   this.model.count(query, function(error, model){
     if(error) return callback(error,null);
     return callback(null,model);

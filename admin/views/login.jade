@@ -1,16 +1,14 @@
 doctype 5
 html
   head
-    title 系统登录
-    link(rel='stylesheet', href='/admin/css/login.css')
+    title Marked Blog
+    link(rel='stylesheet', href='/admin/bootstrap/css/bootstrap.css') 
+    link(rel='stylesheet', href='/admin/css/login.css') 
   body
-    div#content
-      p#logo
-        img(src='/admin/images/marked-blog.png')
-      form(method='post')
-        span.input-wrap
-          input#user-name(name='user', placeholder="用户名")
-        span.input-wrap
-          input#password(name='password', type='password', placeholder="密码")
-        input#login(type='submit', value='登  录')
-    div#footer (C) 2013 marked-blog
+    div.container
+      form.form-signin(method="post")
+        h2.form-signin-heading #{__('loginInfo')}
+        input.input-block-level(type="text", placeholder="#{__('userName')}", name="user")
+        input.input-block-level(type="password", placeholder="#{__('password')}", name="password")
+        button.btn.btn-large.btn-primary(type="submit") #{__('login')}
+

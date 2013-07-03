@@ -18,11 +18,16 @@ block header
 
       function CateListViewModel() {
         var self = this;
+
         self.categories = ko.observableArray([]);
         self.category = ko.observable(new Category());
+        self.cateToEdit = null;
 
         self.edit = function(cate) {
-          self.category(cate);
+          self.category()._id(cate._id());
+          self.category().name(cate.name());
+          self.category().description(cate.description());
+          self.cateToEdit = cate;
         }
 
         self.delete = function(cate) {
@@ -38,7 +43,9 @@ block header
           var data = JSON.parse(jsonObj);
           if (self.category()._id() != '') {
             $.ajax({url: '/category', data: data, success: function () {
-
+              // update model after server-side update
+              self.cateToEdit.name(self.category().name());
+              self.cateToEdit.description(self.category().description());
             }, type: 'put'});
           } else {
             // add new category
