@@ -26,7 +26,7 @@ exports.create = function(req, res) {
 
   CategoryDao.count({name: category.name}, function (err, data) {
     if (data > 0) {
-      res.status(500).send({msg: res.__('cateDuplicate') + newCategory.name });
+      res.status(500).send({msg: res.__('cateDuplicate') + category.name });
     } else {
       CategoryDao.create(category, function (result) {
         res.send(result);

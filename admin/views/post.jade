@@ -1,0 +1,88 @@
+extends layout
+
+block header
+  link(rel="stylesheet", href="/admin/css/post.css")
+  script(type="text/javascript", src="/admin/js/knockout-2.2.1.js")
+  script(type="text/javascript", src="/admin/js/ace.js")
+  script(type="text/javascript", src="/admin/js/keybinding-vim.js")
+  script(type="text/javascript", src="/admin/js/theme-dreamweaver.js")
+  script(type="text/javascript", src="/admin/js/mode-markdown.js")
+  script(type="text/javascript")
+    
+    $(function () {
+      var editor = ace.edit('editor');
+      editor.setTheme("ace/theme/dreamweaver");
+      var MarkdownMode = require("ace/mode/markdown").Mode;
+      editor.getSession().setMode(new MarkdownMode());
+      editor.setValue('# Test');
+
+      function Post(data) {
+        var self = this;
+        if (data == undefined) {
+          data = { _id: '', name: '', description: ''};
+        }
+        self._id = ko.observable(data._id);
+        self.name = ko.observable(data.name);
+        self.description = ko.observable(data.description);
+      }
+
+      function CateListViewModel() {
+        var self = this;
+
+        self.categories = ko.observableArray([]);
+        self.Post = ko.observable(new Post());
+        self.cateToEdit = null;
+
+        self.edit = function(cate) {
+          self.Post()._id(cate._id());
+          self.Post().name(cate.name());
+          self.Post().description(cate.description());
+          self.cateToEdit = cate;
+        }
+
+        self.delete = function(cate) {
+          if (confirm("#{__('confirmDel')} " + cate.name() + ' ？')) {
+            $.ajax({url: '/Post', data: { _id: cate._id() }, success: function () {
+              self.categories.remove(cate);
+            }, type: 'delete'});
+          }
+        };
+
+        self.saveOrUpdate = function () {
+          var jsonObj = ko.toJSON(self.Post());
+          var data = JSON.parse(jsonObj);
+          if (self.Post()._id() != '') {
+            $.ajax({url: '/Post', data: data, success: function () {
+              // update model after server-side update
+              self.cateToEdit.name(self.Post().name());
+              self.cateToEdit.description(self.Post().description());
+            }, type: 'put'});
+          } else {
+            // add new Post
+            $.post('/Post', data, function (result) {
+              self.categories.push(new Post(result));
+            });
+          }
+        };
+
+        /*
+        $.getJSON("/PostList", function(allData) {
+            var mappedCategories = $.map(allData, function(item) { return new Post(item) });
+            self.categories(mappedCategories);
+        });  
+        */
+      };
+      var cateViewModel = new CateListViewModel();
+      ko.applyBindings(cateViewModel);
+
+      $('#add').click(function () {
+        cateViewModel.Post(new Post());
+      });
+      $('#save').click(function () {
+        $('form').submit();
+      });
+    });
+
+block content
+  // display Post list
+  div#editor

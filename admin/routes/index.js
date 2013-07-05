@@ -5,6 +5,7 @@
 var auth = require('../../utils/auth')
   , login = require('./login')
   , category = require('./category')
+  , post = require('./post')
   , blog = require('./blog');
 
 module.exports = function(app) {
@@ -19,4 +20,6 @@ module.exports = function(app) {
   app.post('/category', auth, category.create);
   app.put('/category', auth, category.edit);
   app.delete('/category', auth, category.delete);
+  // post
+  app.get('/post', auth, post.index);
 };

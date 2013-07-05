@@ -1,17 +1,19 @@
 /**
- * Module dependencies.
+ * Post Model
  */
 
 var mongoose = require('mongoose')
+  , md = require('../../utils/markdown')
   , Schema = mongoose.Schema
   , ObjectId = Schema.ObjectId;
 
 var Post = new Schema({
     title: String
-  , author_id: ObjectId
+  , url: String
   , content: String
   , is_markdown: {type: Boolean, default: true}
   , tags: [String]
+  , categories: [String]
   , public: {type: Boolean, default: true}
   , weblog_post: String
   , weblog_sync: {type: Boolean, default: true}
@@ -19,17 +21,17 @@ var Post = new Schema({
   , update_at: {type: Date, default: Date.now}
 });
 Post.virtual('html').get(function() {
-    return this.is_markdown && this.content ? markdown(this.content) : this.content;
+    return this.is_markdown && this.content ? md(this.content) : this.content;
 });
 /**
  * find by tag
  */
 Post.statics.findByTag = function(tagName, callback) {
   //先通过collection Tag定位
-  var Tag=mongoose.model('Tag')
+  var Tag = mongoose.model('Tag')
     , self= this;
 
-  var afterTags= function(err, tags) {
+  var afterTags = function(err, tags) {
     //根据检索出的post id列表查找实际post
     if (err) return callback(err);
     var posts_id=[];
