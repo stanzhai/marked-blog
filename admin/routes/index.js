@@ -22,4 +22,8 @@ module.exports = function(app) {
   app.delete('/category', auth, category.delete);
   // post
   app.get('/post', auth, post.index);
+  app.get('/postList', auth, post.list);
+  app.post('/post', auth, post.create);
+  app.put('/post', auth, post.edit);
+  app.delete('/post', auth, post.delete);
 };

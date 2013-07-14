@@ -14,75 +14,85 @@ block header
       editor.setTheme("ace/theme/dreamweaver");
       var MarkdownMode = require("ace/mode/markdown").Mode;
       editor.getSession().setMode(new MarkdownMode());
-      editor.setValue('# Test');
 
       function Post(data) {
         var self = this;
         if (data == undefined) {
-          data = { _id: '', name: '', description: ''};
+          data = { _id: '', title: '', content: ''};
         }
         self._id = ko.observable(data._id);
-        self.name = ko.observable(data.name);
-        self.description = ko.observable(data.description);
+        self.title = ko.observable(data.title);
+        self.content = ko.observable(data.content);
       }
 
-      function CateListViewModel() {
+      function postListViewModel() {
         var self = this;
 
-        self.categories = ko.observableArray([]);
-        self.Post = ko.observable(new Post());
-        self.cateToEdit = null;
+        self.posts = ko.observableArray([]);
+        self.post = ko.observable(new Post());
+        self.postToEdit = null;
 
-        self.edit = function(cate) {
-          self.Post()._id(cate._id());
-          self.Post().name(cate.name());
-          self.Post().description(cate.description());
-          self.cateToEdit = cate;
+        self.edit = function(post) {
+          self.post()._id(post._id());
+          self.post().title(post.title());
+          self.post().content(post.content());
+          self.postToEdit = post;
         }
 
-        self.delete = function(cate) {
-          if (confirm("#{__('confirmDel')} " + cate.name() + ' ？')) {
-            $.ajax({url: '/Post', data: { _id: cate._id() }, success: function () {
-              self.categories.remove(cate);
+        self.delete = function(post) {
+          if (confirm("#{__('confirmDel')} " + post.title() + ' ？')) {
+            $.ajax({url: '/post', data: { _id: post._id() }, success: function () {
+              self.posts.remove(post);
             }, type: 'delete'});
           }
         };
 
         self.saveOrUpdate = function () {
-          var jsonObj = ko.toJSON(self.Post());
+          self.post().content(editor.getValue());
+          var jsonObj = ko.toJSON(self.post());
           var data = JSON.parse(jsonObj);
-          if (self.Post()._id() != '') {
-            $.ajax({url: '/Post', data: data, success: function () {
+          if (self.post()._id() != '') {
+            $.ajax({url: '/post', data: data, success: function () {
               // update model after server-side update
-              self.cateToEdit.name(self.Post().name());
-              self.cateToEdit.description(self.Post().description());
+              self.postToEdit.title(self.post().title());
+              self.postToEdit.content(self.post().content());
             }, type: 'put'});
           } else {
             // add new Post
-            $.post('/Post', data, function (result) {
-              self.categories.push(new Post(result));
+            $.post('/post', data, function (result) {
+              self.posts.push(new Post(result));
             });
           }
         };
 
         /*
         $.getJSON("/PostList", function(allData) {
-            var mappedCategories = $.map(allData, function(item) { return new Post(item) });
-            self.categories(mappedCategories);
+            var mappedposts = $.map(allData, function(item) { return new Post(item) });
+            self.posts(mappedposts);
         });  
         */
       };
-      var cateViewModel = new CateListViewModel();
-      ko.applyBindings(cateViewModel);
+      var postViewModel = new postListViewModel();
+      ko.applyBindings(postViewModel);
 
       $('#add').click(function () {
-        cateViewModel.Post(new Post());
+        postViewModel.Post(new Post());
       });
       $('#save').click(function () {
         $('form').submit();
+      });
+      $('form').submit(function () {
+        alert(editor.getValue());
+        //return false;
       });
     });
 
 block content
   // display Post list
-  div#editor
+  form(data-bind="submit: $root.saveOrUpdate")
+    input(type="hidden", data-bind="value: post()._id")
+    label 标题
+    input.input-block-level(type="text", name="title", data-bind="value: post().title")
+    label 正文
+    div#editor.input-block-level
+    input.btn.btn-primary(type="submit", value="保存")

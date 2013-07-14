@@ -23,17 +23,9 @@ exports.list = function(req, res){
 // add post
 exports.create = function(req, res) {
   var post = new Post(req.body);
-
-  PostDao.count({name: post.name}, function (err, data) {
-    if (data > 0) {
-      res.status(500).send({msg: res.__('cateDuplicate') + post.name });
-    } else {
-      PostDao.create(post, function (result) {
-        res.send(result);
-      });
-    }
+  PostDao.create(post, function (result) {
+    res.send(result);
   });
-
 };
 
 // edit post 
