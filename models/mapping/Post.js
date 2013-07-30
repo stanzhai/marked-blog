@@ -11,7 +11,6 @@ var Post = new Schema({
     title: String
   , url: String
   , content: String
-  , is_markdown: {type: Boolean, default: true}
   , tags: [String]
   , categories: [String]
   , public: {type: Boolean, default: true}
@@ -19,9 +18,10 @@ var Post = new Schema({
   , weblog_sync: {type: Boolean, default: true}
   , create_at: {type: Date, default: Date.now, index: true}
   , update_at: {type: Date, default: Date.now}
+  , views: Number
 });
 Post.virtual('html').get(function() {
-    return this.is_markdown && this.content ? md(this.content) : this.content;
+    return md(this.content);
 });
 /**
  * find by tag

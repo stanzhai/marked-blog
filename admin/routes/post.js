@@ -14,8 +14,8 @@ exports.index = function(req, res){
 
 // get post list info
 exports.list = function(req, res){
-  PostDao.getAll(function (err, data) {
-    res.send(data);
+  PostDao.find({}, {title: 1, url: 1, create_at: 1, public: 1, views: 1}, {}, function (err, data) {
+    res.render('postList', { posts: data });
   })
 };
 
