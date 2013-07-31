@@ -1,6 +1,5 @@
-
 /**
- * Module dependencies.
+ * Admin Module dependencies.
  */
 
 var express = require('express')
@@ -10,7 +9,7 @@ var express = require('express')
 
 var app = express();
 
-// 国际化处理
+// Internationalization
 i18n.configure({
   locales: ['zh', 'en'], 
   cookie: 'locale', 
@@ -23,11 +22,11 @@ i18n.configure({
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(i18n.init);
-app.use('/admin', require('stylus').middleware(__dirname + '/public'));
-app.use('/admin', express.static(path.join(__dirname, '/public')));
+app.use('admin', require('stylus').middleware(__dirname + '/public'));
+app.use('admin', express.static(path.join(__dirname, '/public')));
 
 routes(app);
 
-module.exports = function (parent, options) {
-  parent.use(app);
+module.exports = function (adminUrl, parent) {
+  parent.use(adminUrl, app);
 };

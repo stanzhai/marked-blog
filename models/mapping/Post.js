@@ -18,7 +18,7 @@ var Post = new Schema({
   , weblog_sync: {type: Boolean, default: true}
   , create_at: {type: Date, default: Date.now, index: true}
   , update_at: {type: Date, default: Date.now}
-  , views: Number
+  , views: {type:Number, default: 0}
 });
 Post.virtual('html').get(function() {
     return md(this.content);

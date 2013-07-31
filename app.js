@@ -4,11 +4,12 @@
  */
 
 var express = require('express')
-  , routes = require('./routes')
   , http = require('http') 
   , yaml = require('yamljs')
   , path = require('path')
   , admin = require('./admin')
+  , routes = require('./routes')
+  , blog = require('./routes/blog')
   , config = require('./config.yml')
   , Category = require('./models').Category
   , CategoryDao = require('./dao').CategoryDao;
@@ -41,8 +42,17 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-admin(app);
+// admin page routes
+admin(config.admin_url, app);
+// blog page routes
 routes(app);
+// post page routes
+app.use(blog.posts);
+// 404 status page
+app.use(function (req, res) { 
+  res.status(404);
+  res.render('404'); 
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('marked-blog server listening on port ' + app.get('port'));
