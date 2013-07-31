@@ -2,20 +2,21 @@
  * admin pages.
  */
 var auth = require('../../utils/auth')
-  , yaml = require('yamljs')
-  , config = require('../../config.yml')
   , login = require('./login')
   , admin = require('./admin')
   , category = require('./category')
   , post = require('./post');
 
 module.exports = function(app) {
+  var config = app.get('config');
+
   app.get('/login', login.get);
   app.post('/login', login.post);
   app.get('/logout', login.out);
 
+  console.log(config.admin_url);
   // All of the following request requires authentication
-  app.all(config.admin_url + '/*', auth);
+  //app.all('*', auth);
 
   app.get('/', admin.index);
   // category

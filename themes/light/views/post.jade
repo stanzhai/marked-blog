@@ -1,5 +1,7 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to Home #{content}
+  h1
+    a(href='/')= site_name
+    = ' >> ' + title
+  div !{html}

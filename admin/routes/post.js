@@ -16,7 +16,7 @@ exports.index = function(req, res){
 exports.list = function(req, res){
   PostDao.find({}, {title: 1, url: 1, create_at: 1, public: 1, views: 1}, {}, function (err, data) {
     res.render('postList', { posts: data });
-  })
+  });
 };
 
 

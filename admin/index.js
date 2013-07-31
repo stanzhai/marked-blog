@@ -3,6 +3,8 @@
  */
 
 var express = require('express')
+  , yaml = require('yamljs') 
+  , config = require('../config.yml')
   , path = require('path')
   , i18n = require('i18n')
   , routes = require('./routes');
@@ -22,11 +24,13 @@ i18n.configure({
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(i18n.init);
-app.use('admin', require('stylus').middleware(__dirname + '/public'));
-app.use('admin', express.static(path.join(__dirname, '/public')));
+app.use(require('stylus').middleware(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, '/public')));
+app.locals(config);
+app.set('config', config);
 
 routes(app);
 
-module.exports = function (adminUrl, parent) {
-  parent.use(adminUrl, app);
+module.exports = function (parent) {
+  parent.use(config.admin_url, app);
 };

@@ -36,6 +36,7 @@ app.use(express.methodOverride());
 app.use(require('stylus').middleware(publicFolder));
 app.use(express.static(publicFolder));
 app.use(app.router);
+app.locals(config);
 
 // development only
 if ('development' == app.get('env')) {
@@ -43,7 +44,7 @@ if ('development' == app.get('env')) {
 }
 
 // admin page routes
-admin(config.admin_url, app);
+admin(app);
 // blog page routes
 routes(app);
 // post page routes
