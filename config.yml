@@ -17,7 +17,7 @@ permalink: :year/:month/:day/:title/
 ## Marked Blog uses MongoDB as database server
 ## For Dev: mongodb://<user>:<password>@widmore.mongohq.com:10010/MarkedBlog
 mongodb:
-  host: 192.168.2.103
+  host: localhost
   port: 27017
   db_name: MarkedBlog
   user_name: 

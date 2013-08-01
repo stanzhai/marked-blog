@@ -52,7 +52,7 @@ app.use(blog.posts);
 // 404 status page
 app.use(function (req, res) { 
   res.status(404);
-  res.render('404'); 
+  res.render('404', {title: '404 Error'}); 
 });
 
 http.createServer(app).listen(app.get('port'), function(){
