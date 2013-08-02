@@ -23,6 +23,8 @@ exports.posts = function(req, res, next) {
   var url = req.path.replace('/', '');
   PostDao.findOne({url: url}, function (err, post) {
     if (post) {
+      // add view count
+      PostDao.update({url: url}, {views: post.views + 1});
       res.render('post', post);
     } else {
       next();

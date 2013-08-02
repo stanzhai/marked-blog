@@ -2,15 +2,14 @@ doctype 5
 html
   head
     title= title
-    base(href='#{ admin_url }/')
-    link(rel='stylesheet', href='bootstrap/css/bootstrap.css')
-    link(rel='stylesheet', href='bootstrap/css/bootstrap-responsive.css')
-    link(rel='stylesheet', href='css/style.css')
-    link(rel='stylesheet', href='css/messenger.css')
-    link(rel='stylesheet', href='css/messenger-theme-future.css')
-    script(type="text/javascript", src="js/jquery-1.10.1.min.js")
-    script(type="text/javascript", src="js/messenger.min.js")
-    script(type="text/javascript", src="bootstrap/js/bootstrap.min.js")
+    link(rel='stylesheet', href='#{admin_url}/bootstrap/css/bootstrap.css')
+    link(rel='stylesheet', href='#{admin_url}/bootstrap/css/bootstrap-responsive.css')
+    link(rel='stylesheet', href='#{admin_url}/css/style.css')
+    link(rel='stylesheet', href='#{admin_url}/css/messenger.css')
+    link(rel='stylesheet', href='#{admin_url}/css/messenger-theme-future.css')
+    script(type="text/javascript", src="#{admin_url}/js/jquery-1.10.1.min.js")
+    script(type="text/javascript", src="#{admin_url}/js/messenger.min.js")
+    script(type="text/javascript", src="#{admin_url}/bootstrap/js/bootstrap.min.js")
     block header
   body
     div.navbar.navbar-inverse.navbar-fixed-top
@@ -37,11 +36,11 @@ html
             ul.nav.nav-list
               li.nav-header 管理
               li.active
-                a(href="postList") 文章
+                a(href="#{admin_url}/postList") 文章
               li
-                a(href="category") 分类
+                a(href="#{admin_url}/category") 分类
               li
-                a(href="tag") 标签
+                a(href="#{admin_url}/tag") 标签
               li.nav-header 设置
               li.divider
               li

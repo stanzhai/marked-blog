@@ -1,7 +1,7 @@
 extends layout
 
 block header
-  script(type="text/javascript", src="js/knockout-2.2.1.js")
+  script(type="text/javascript", src="#{admin_url}/js/knockout-2.2.1.js")
   script(type="text/javascript").
     
     $(function () {
@@ -32,7 +32,7 @@ block header
 
         self.delete = function(cate) {
           if (confirm("#{__('confirmDel')} " + cate.name() + ' ？')) {
-            $.ajax({url: 'category', data: { _id: cate._id() }, success: function () {
+            $.ajax({url: '#{admin_url}/category', data: { _id: cate._id() }, success: function () {
               self.categories.remove(cate);
             }, type: 'delete'});
           }
@@ -42,20 +42,20 @@ block header
           var jsonObj = ko.toJSON(self.category());
           var data = JSON.parse(jsonObj);
           if (self.category()._id() != '') {
-            $.ajax({url: 'category', data: data, success: function () {
+            $.ajax({url: '#{admin_url}/category', data: data, success: function () {
               // update model after server-side update
               self.cateToEdit.name(self.category().name());
               self.cateToEdit.description(self.category().description());
             }, type: 'put'});
           } else {
             // add new category
-            $.post('category', data, function (result) {
+            $.post('#{admin_url}/category', data, function (result) {
               self.categories.push(new Category(result));
             });
           }
         };
 
-        $.getJSON("categoryList", function(allData) {
+        $.getJSON("#{admin_url}/categoryList", function(allData) {
             var mappedCategories = $.map(allData, function(item) { return new Category(item) });
             self.categories(mappedCategories);
         });  

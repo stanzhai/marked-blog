@@ -8,8 +8,8 @@ var mongoose = require('mongoose')
   , ObjectId = Schema.ObjectId;
 
 var Post = new Schema({
-    title: String
-  , url: String
+    title: {type: String, index: true}
+  , url: {type: String, index: true}
   , content: String
   , tags: [String]
   , categories: [String]

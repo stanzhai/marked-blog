@@ -7,6 +7,7 @@ var mongoose = require('mongoose')
   , yaml = require('yamljs')
   , db = require('../config.yml').mongodb;
 
+// build mongodb uri
 var uri = 'mongodb://';
 if(db.user_name && db.password) {
   uri += db.user_name + ':' + db.password + '@';

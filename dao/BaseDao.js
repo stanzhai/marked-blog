@@ -40,7 +40,6 @@ BaseDao.prototype.findOne = function (query, callback) {
 BaseDao.prototype.find = function (query,fileds,opt,callback) {
   this.model.find(query, fileds, opt, function(error,model){
     if(error) return callback(error,null);
-
     return callback(null,model);
   });
 };
@@ -49,7 +48,6 @@ BaseDao.prototype.find = function (query,fileds,opt,callback) {
 BaseDao.prototype.getAll = function (callback) {
   this.model.find({}, function(error,model){
     if(error) return callback(error,null);
-
     return callback(null, model);
   });
 };
@@ -57,7 +55,6 @@ BaseDao.prototype.getAll = function (callback) {
 BaseDao.prototype.delete = function (query, callback){
   this.model.remove(query, function(error){
     if(error) return callback(error);
-
     return callback(null);
   });
 };
@@ -65,6 +62,7 @@ BaseDao.prototype.delete = function (query, callback){
 
 BaseDao.prototype.update = function( conditions, update ,options, callback) {
   this.model.update(conditions, update, options, function (error) {
+    if (typeof(callback) == 'undefined') return null;
     if(error) return callback(error);
     return callback(null);
   });

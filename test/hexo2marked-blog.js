@@ -6,8 +6,8 @@ var yaml = require('yamljs')
   , Post = require('../models').Post
   , PostDao = require('../dao').PostDao;
 
-//var postsDir = 'D:\\Software\\cygwin\\home\\zhaishidan\\git\\hexoblog\\source\\_posts';
-var postsDir = '/Users/stan/Documents/hexoblog/source/_posts';
+var postsDir = 'D:\\Software\\cygwin\\home\\zhaishidan\\git\\hexoblog\\source\\_posts';
+//var postsDir = '/Users/stan/Documents/hexoblog/source/_posts';
 
 fs.readdir(postsDir, function (err, files) {
 

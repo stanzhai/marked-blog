@@ -1,12 +1,12 @@
 extends layout
 
 block header
-  link(rel="stylesheet", href="/admin/css/post.css")
-  script(type="text/javascript", src="/admin/js/knockout-2.2.1.js")
-  script(type="text/javascript", src="/admin/js/ace.js")
-  script(type="text/javascript", src="/admin/js/keybinding-vim.js")
-  script(type="text/javascript", src="/admin/js/theme-dreamweaver.js")
-  script(type="text/javascript", src="/admin/js/mode-markdown.js")
+  link(rel="stylesheet", href="#{admin_url}/css/post.css")
+  script(type="text/javascript", src="#{admin_url}/js/knockout-2.2.1.js")
+  script(type="text/javascript", src="#{admin_url}/js/ace.js")
+  script(type="text/javascript", src="#{admin_url}/js/keybinding-vim.js")
+  script(type="text/javascript", src="#{admin_url}/js/theme-dreamweaver.js")
+  script(type="text/javascript", src="#{admin_url}/js/mode-markdown.js")
   script(type="text/javascript")
     
     $(function () {
@@ -41,7 +41,7 @@ block header
 
         self.delete = function(post) {
           if (confirm("#{__('confirmDel')} " + post.title() + ' ？')) {
-            $.ajax({url: '/post', data: { _id: post._id() }, success: function () {
+            $.ajax({url: '#{admin_url}/post', data: { _id: post._id() }, success: function () {
               self.posts.remove(post);
             }, type: 'delete'});
           }
@@ -52,14 +52,14 @@ block header
           var jsonObj = ko.toJSON(self.post());
           var data = JSON.parse(jsonObj);
           if (self.post()._id() != '') {
-            $.ajax({url: '/post', data: data, success: function () {
+            $.ajax({url: '#{admin_url}/post', data: data, success: function () {
               // update model after server-side update
               self.postToEdit.title(self.post().title());
               self.postToEdit.content(self.post().content());
             }, type: 'put'});
           } else {
             // add new Post
-            $.post('/post', data, function (result) {
+            $.post('#{admin_url}/post', data, function (result) {
               self.posts.push(new Post(result));
             });
           }

@@ -15,11 +15,11 @@ permalink: :year/:month/:day/:title/
 
 # Database
 ## Marked Blog uses MongoDB as database server
-## For Dev: mongodb://<user>:<password>@widmore.mongohq.com:10010/MarkedBlog
+## For Dev: mongodb://<user>:<password>@widmore.mongohq.com:10010/marked-blog
 mongodb:
   host: localhost
   port: 27017
-  db_name: MarkedBlog
+  db_name: marked-blog
   user_name: 
   password: 
 

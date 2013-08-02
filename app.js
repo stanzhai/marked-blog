@@ -22,6 +22,7 @@ var app = express();
 
 var viewFolder = path.join(__dirname, '/themes/', config.theme, '/views');
 var publicFolder = path.join(__dirname, '/themes/', config.theme, '/public');
+var uploadFolder = path.join(__dirname, '/uploads');
 
 // all environments
 app.set('port', process.env.PORT || config.port);
@@ -35,6 +36,7 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(require('stylus').middleware(publicFolder));
 app.use(express.static(publicFolder));
+app.use(express.static(uploadFolder));
 app.use(app.router);
 app.locals(config);
 
