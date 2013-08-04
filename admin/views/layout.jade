@@ -19,33 +19,19 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.brand(href="#") Marked Blog
+          a.brand(href="#{admin_url}/") Marked Blog
           div.nav-collapse.collapse
             p.navbar-text.pull-right
-              a.navbar-link= User
+              a.navbar-link(href="#") User
             ul.nav
               li.active
-                a(href="#") Home
+                a(href="#") Posts
               li
                 a(href="#") About
 
     div.container-fluid
       div.row-fluid
-        div.span2
-          div.well.sidebar-nav
-            ul.nav.nav-list
-              li.nav-header 管理
-              li.active
-                a(href="#{admin_url}/postList") 文章
-              li
-                a(href="#{admin_url}/category") 分类
-              li
-                a(href="#{admin_url}/tag") 标签
-              li.nav-header 设置
-              li.divider
-              li
-                a(href="#") 其他
-        div.span10
+        div.span12
           block content
       hr
       footer

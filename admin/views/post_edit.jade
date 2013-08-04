@@ -1,0 +1,47 @@
+extends layout
+
+block header
+  title= post.title
+
+  link(rel="stylesheet", href="#{admin_url}/css/post.css")
+  script(type="text/javascript", src="#{admin_url}/js/knockout-2.2.1.js")
+  script(type="text/javascript", src="#{admin_url}/js/ace.js")
+  script(type="text/javascript", src="#{admin_url}/js/keybinding-vim.js")
+  script(type="text/javascript", src="#{admin_url}/js/theme-dreamweaver.js")
+  script(type="text/javascript", src="#{admin_url}/js/mode-markdown.js")
+  script(type="text/javascript")
+    
+    $(function () {
+      var editor = ace.edit('editor');
+      editor.setTheme("ace/theme/dreamweaver");
+      var MarkdownMode = require("ace/mode/markdown").Mode;
+      editor.getSession().setMode(new MarkdownMode());
+
+      $('form').submit(function () {
+        var data = $('from').serilize();
+        if ($('#postId').val() != '') {
+          $.ajax({url: '#{admin_url}/post', data: data, success: function () {
+            alert('update success');
+          }, type: 'put'});
+        } else {
+          // add new Post
+          $.post('#{admin_url}/post', data, function (result) {
+            alert('create success');
+          });
+        }
+        return false;
+      });
+    });
+
+block content
+  // edit post 
+  form#editPost
+    input#postId(type="hidden", value="#{post._id}")
+    label 标题
+    input.input-block-level(type="text", name="title", value="#{post.title}")
+    div(style='display: none;')
+      label url
+      input(type="text", name="url", value="#{post.url}")
+    label 正文
+    div#editor.input-block-level= post.content
+    input.btn.btn-primary(type="submit", value="保存")

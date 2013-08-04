@@ -1,98 +1,29 @@
 extends layout
 
 block header
-  link(rel="stylesheet", href="#{admin_url}/css/post.css")
-  script(type="text/javascript", src="#{admin_url}/js/knockout-2.2.1.js")
-  script(type="text/javascript", src="#{admin_url}/js/ace.js")
-  script(type="text/javascript", src="#{admin_url}/js/keybinding-vim.js")
-  script(type="text/javascript", src="#{admin_url}/js/theme-dreamweaver.js")
-  script(type="text/javascript", src="#{admin_url}/js/mode-markdown.js")
+  link(rel="stylesheet", href="/admin/css/post.css")
+  script(type="text/javascript", src="/admin/js/knockout-2.2.1.js")
   script(type="text/javascript")
     
     $(function () {
-      var editor = ace.edit('editor');
-      editor.setTheme("ace/theme/dreamweaver");
-      var MarkdownMode = require("ace/mode/markdown").Mode;
-      editor.getSession().setMode(new MarkdownMode());
-
-      function Post(data) {
-        var self = this;
-        if (data == undefined) {
-          data = { _id: '', title: '', content: ''};
-        }
-        self._id = ko.observable(data._id);
-        self.title = ko.observable(data.title);
-        self.content = ko.observable(data.content);
-      }
-
-      function postListViewModel() {
-        var self = this;
-
-        self.posts = ko.observableArray([]);
-        self.post = ko.observable(new Post());
-        self.postToEdit = null;
-
-        self.edit = function(post) {
-          self.post()._id(post._id());
-          self.post().title(post.title());
-          self.post().content(post.content());
-          self.postToEdit = post;
-        }
-
-        self.delete = function(post) {
-          if (confirm("#{__('confirmDel')} " + post.title() + ' ？')) {
-            $.ajax({url: '#{admin_url}/post', data: { _id: post._id() }, success: function () {
-              self.posts.remove(post);
-            }, type: 'delete'});
-          }
-        };
-
-        self.saveOrUpdate = function () {
-          self.post().content(editor.getValue());
-          var jsonObj = ko.toJSON(self.post());
-          var data = JSON.parse(jsonObj);
-          if (self.post()._id() != '') {
-            $.ajax({url: '#{admin_url}/post', data: data, success: function () {
-              // update model after server-side update
-              self.postToEdit.title(self.post().title());
-              self.postToEdit.content(self.post().content());
-            }, type: 'put'});
-          } else {
-            // add new Post
-            $.post('#{admin_url}/post', data, function (result) {
-              self.posts.push(new Post(result));
-            });
-          }
-        };
-
-        /*
-        $.getJSON("/PostList", function(allData) {
-            var mappedposts = $.map(allData, function(item) { return new Post(item) });
-            self.posts(mappedposts);
-        });  
-        */
-      };
-      var postViewModel = new postListViewModel();
-      ko.applyBindings(postViewModel);
-
-      $('#add').click(function () {
-        postViewModel.Post(new Post());
-      });
-      $('#save').click(function () {
-        $('form').submit();
-      });
-      $('form').submit(function () {
-        //alert(editor.getValue());
-        //return false;
-      });
+      
     });
 
 block content
   // display Post list
-  form(data-bind="submit: $root.saveOrUpdate")
-    input(type="hidden", data-bind="value: post()._id")
-    label 标题
-    input.input-block-level(type="text", name="title", data-bind="value: post().title")
-    label 正文
-    div#editor.input-block-level
-    input.btn.btn-primary(type="submit", value="保存")
+  table.table.table-bordered.table-striped
+    tr
+      th 标题
+      th 发布时间
+      th 浏览数
+      th 是否发布
+      th 操作
+    - each post in posts
+      tr
+        td
+          a(href="/#{post.url}", target='_blank') #{post.title}
+        td #{post.create_date}
+        td #{post.views}
+        td #{post.public}
+        td 
+          a.button(href="#{admin_url}/post/edit/#{post._id}") 编辑

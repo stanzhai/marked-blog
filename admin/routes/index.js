@@ -18,7 +18,7 @@ module.exports = function(app) {
   // All of the following request requires authentication
   //app.all('*', auth);
 
-  app.get('/', admin.index);
+  app.get('/', post.index);
   // category
   app.get('/category', category.index);
   app.get('/categoryList', category.list);
@@ -27,7 +27,8 @@ module.exports = function(app) {
   app.delete('/category', category.delete);
   // post
   app.get('/post', post.index);
-  app.get('/postList', post.list);
+  app.get('/post/create', post.createOrEdit);
+  app.get('/post/edit/:id', post.createOrEdit);
   app.post('/post', post.create);
   app.put('/post', post.edit);
   app.delete('/post', post.delete);

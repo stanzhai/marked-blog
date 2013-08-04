@@ -3,27 +3,48 @@
  * Post Logic
  */
 var yaml = require('yamljs')
+  , moment = require('moment')
   , config = require('../../config.yml')
   , Post = require('../../models').Post
   , PostDao = require('../../dao').PostDao;
 
-// get post index page
-exports.index = function(req, res){
-  res.render('post');
-};
+// get post list page
+exports.index = function(req, res) {
+  var fields = {title: 1, url: 1, create_at: 1, public: 1, views: 1};
+  var opts = {sort: {create_at: -1}};
 
-// get post list info
-exports.list = function(req, res){
-  PostDao.find({}, {title: 1, url: 1, create_at: 1, public: 1, views: 1}, {}, function (err, data) {
-    res.render('postList', { posts: data });
+  PostDao.find({}, fields, opts, function (err, data) {
+    for (var i = 0; i < data.length; i++) {
+      var post = data[i];
+      var date = moment(post.create_at).format('YYYY-MM-DD HH:mm:ss');
+      post.create_date = date;
+    };
+    res.render('post', { posts: data });
   });
 };
 
+// get post create or edit page
+exports.createOrEdit = function(req, res) {
+  var id = req.params.id;
+  var emptyPost = {_id: '', url: '', title: '', content: ''};
+  if (id) {
+    PostDao.findOne({_id: id}, function (err, post) {
+      if (post) {
+        res.render('post_edit', {post: post});
+      } else {
+        res.render('post_edit', {post: emptyPost});
+      }
+    });
+  } else {
+    res.render('post_edit', {post: emptyPost});
+  }
+};
 
 // add post
 exports.create = function(req, res) {
   var post = new Post(req.body);
   post.url = post.url || post.title;
+
   PostDao.create(post, function (result) {
     res.send(result);
   });
