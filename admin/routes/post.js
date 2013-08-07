@@ -54,12 +54,12 @@ exports.create = function(req, res) {
 exports.edit = function (req, res) {
   var newPost = req.body;
 
-  PostDao.count({name: newPost.name, _id: { $ne: newPost._id }}, function (err, data) {
+  PostDao.count({_id: { $ne: newPost._id }}, function (err, data) {
     if (data > 0) {
       res.status(500).send({msg: res.__('cateDuplicate') + newPost.name });
     } else {
       PostDao.update({ _id: newPost._id }, 
-        {$set: {name: newPost.name, description: newPost.description }}, 
+        {$set: {title: newPost.title, content: newPost.content }}, 
         false, 
         function (err) {
           if (err) {

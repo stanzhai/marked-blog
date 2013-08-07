@@ -11,14 +11,14 @@ block header
   script(type="text/javascript", src="#{admin_url}/js/mode-markdown.js")
   script(type="text/javascript")
     
-    $(function () {
+    $(document).ready(function () {
       var editor = ace.edit('editor');
       editor.setTheme("ace/theme/dreamweaver");
       var MarkdownMode = require("ace/mode/markdown").Mode;
       editor.getSession().setMode(new MarkdownMode());
 
       $('form').submit(function () {
-        var data = $('from').serilize();
+        var data = $('from').serialize();
         if ($('#postId').val() != '') {
           $.ajax({url: '#{admin_url}/post', data: data, success: function () {
             alert('update success');
@@ -35,7 +35,7 @@ block header
 
 block content
   // edit post 
-  form#editPost
+  form#editPost(method='post')
     input#postId(type="hidden", value="#{post._id}")
     label 标题
     input.input-block-level(type="text", name="title", value="#{post.title}")
