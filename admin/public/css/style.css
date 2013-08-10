@@ -14,7 +14,7 @@ body{font-family:"Microsoft Yahei";overflow-x:hidden}
 .mb-content{margin-top:55px;color:#555}.mb-content .common-link{position:fixed;right:0;top:10px;width:365px;height:40px}.mb-content .common-link a{display:inline-block;height:40px;line-height:40px;text-align:center;color:#fff;text-decoration:none;font-size:16px}
 .mb-content .common-link a {float: right;}
 .mb-content .common-link .source{width:100px;background-color:#f50}
-.mb-content .common-link .home{width:148px;background-color:#333}
+.mb-content .common-link .black{width:148px;background-color:#333}
 .mb-content .common-link .demo{width:100px;background-color:#fa681f}
 .mb-content h1{display:none}
 .mb-content h1.title{display:block;float:left;font-size:40px;font-weight:500;color:#333}.mb-content h1.title:first-letter{text-transform:uppercase}

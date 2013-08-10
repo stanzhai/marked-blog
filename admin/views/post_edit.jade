@@ -17,8 +17,13 @@ block header
       var MarkdownMode = require("ace/mode/markdown").Mode;
       editor.getSession().setMode(new MarkdownMode());
 
-      $('form').submit(function () {
-        var data = $('from').serialize();
+      $('a.black').click(function () {
+        $('#editPost').submit();
+      });
+
+      $('#editPost').submit(function () {
+        var data = $(this).serialize();
+        data += '&content=' + editor.getValue();
         if ($('#postId').val() != '') {
           $.ajax({url: '#{admin_url}/post', data: data, success: function () {
             alert('update success');
@@ -33,10 +38,13 @@ block header
       });
     });
 
+block links
+  a.black(href='#') Save
+
 block content
   // edit post 
   form#editPost(method='post')
-    input#postId(type="hidden", value="#{post._id}")
+    input#postId(type="hidden", name="_id", value="#{post._id}")
     label 标题
     input.input-block-level(type="text", name="title", value="#{post.title}")
     div(style='display: none;')
@@ -44,4 +52,3 @@ block content
       input(type="text", name="url", value="#{post.url}")
     label 正文
     div#editor.input-block-level= post.content
-    input.btn.btn-primary(type="submit", value="保存")

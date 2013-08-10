@@ -43,6 +43,7 @@ exports.createOrEdit = function(req, res) {
 // add post
 exports.create = function(req, res) {
   var post = new Post(req.body);
+  post.title = post.title || 'Untitled' + moment(new Date()).format('YYYY-MM-DD_HH:mm:ss');;
   post.url = post.url || post.title;
 
   PostDao.create(post, function (result) {
@@ -52,23 +53,18 @@ exports.create = function(req, res) {
 
 // edit post 
 exports.edit = function (req, res) {
-  var newPost = req.body;
+  var post = req.body;
+  post.title = post.title || 'Untitled' + moment(new Date()).format('YYYY-MM-DD_HH:mm:ss');;
 
-  PostDao.count({_id: { $ne: newPost._id }}, function (err, data) {
-    if (data > 0) {
-      res.status(500).send({msg: res.__('cateDuplicate') + newPost.name });
-    } else {
-      PostDao.update({ _id: newPost._id }, 
-        {$set: {title: newPost.title, content: newPost.content }}, 
-        false, 
-        function (err) {
-          if (err) {
-            res.status(500).send({ msg: err });
-          } else {
-            res.send('ok');
-          }
-      });
-    }
+  PostDao.update({ _id: post._id }, 
+    {$set: {title: post.title, content: post.content }}, 
+    false, 
+    function (err) {
+      if (err) {
+        res.status(500).send({ msg: err });
+      } else {
+        res.send('ok');
+      }
   });
 
 }
