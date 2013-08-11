@@ -3,10 +3,20 @@ extends layout
 block header
   link(rel="stylesheet", href="/admin/css/post.css")
   script(type="text/javascript", src="/admin/js/knockout-2.2.1.js")
-  script(type="text/javascript")
+  script(type="text/javascript").
     
     $(function () {
-      
+      // delete post
+      $('a.delete').click(function () {
+        var tr = $(this).parents('tr');
+        var id = $(this).attr('data-id');
+        if (confirm('确定要删除这篇文章吗？')) {
+          $.ajax({url: '#{admin_url}/post', data: {_id: id}, success: function () {
+            //location.reload();
+            tr.remove();
+          }, type: 'delete'});
+        }
+      });
     });
 
 block links
@@ -29,4 +39,14 @@ block content
         td #{post.views}
         td #{post.public}
         td 
-          a.button(href="#{admin_url}/post/edit/#{post._id}") 编辑
+          div.btn-group
+            a.edit.btn.btn-small(href="#{admin_url}/post/edit/#{post._id}")
+              i.icon-edit
+              &nbsp;编辑
+            button.btn.btn-small.dropdown-toggle(data-toggle="dropdown")
+              span.caret
+            ul.dropdown-menu.pull-right
+              li
+                a.delete(href="#", data-id='#{post._id}')
+                  i.icon-remove-sign
+                  &nbsp;删除

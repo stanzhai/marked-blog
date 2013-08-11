@@ -11,7 +11,7 @@ body{font-family:"Microsoft Yahei";overflow-x:hidden}
 .mb-sidebar .nav-toggle{display:block;position:fixed;top:320px;width:16px;height:85px;margin-left:264px;background:url('../images/toggle.png');z-index:99}
 .toggle-bar {cursor: pointer;}
 .mb-sidebar-mini{position:fixed;left:0;top:10px;height:100%;width:0;background-color:#24ABEB;z-index:50;-webkit-box-shadow:10px 0 10px 0 rgba(0,0,0,0.1);box-shadow:10px 0 10px 0 rgba(0,0,0,0.1);overflow:hidden}.mb-sidebar-mini .nav-toggle{display:block;position:absolute;top:320px;left:10px;width:16px;height:85px;background:url('../images/toggle.png') no-repeat -16px 0;z-index:99}
-.mb-content{margin-top:55px;color:#555}.mb-content .common-link{position:fixed;right:0;top:10px;width:365px;height:40px}.mb-content .common-link a{display:inline-block;height:40px;line-height:40px;text-align:center;color:#fff;text-decoration:none;font-size:16px}
+.mb-content{margin-top:55px;color:#555}.mb-content .common-link{position:fixed;right:0;top:10px;width:365px;height:40px;z-index: 10}.mb-content .common-link a{display:inline-block;height:40px;line-height:40px;text-align:center;color:#fff;text-decoration:none;font-size:16px;}
 .mb-content .common-link a {float: right;}
 .mb-content .common-link .source{width:100px;background-color:#f50}
 .mb-content .common-link .black{width:148px;background-color:#333}
