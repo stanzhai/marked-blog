@@ -10,13 +10,7 @@ var express = require('express')
   , admin = require('./admin')
   , routes = require('./routes')
   , blog = require('./routes/blog')
-  , config = require('./config.yml')
-  , Category = require('./models').Category
-  , CategoryDao = require('./dao').CategoryDao;
-
-// CategoryDao.create(new Category({name: 'zsd', description: 'jasondan325@163.com'}), function (doc) {
-//   console.log(doc);
-// });
+  , config = require('./config.yml');
 
 var app = express();
 

@@ -17,3 +17,11 @@ block content
           div.alignleft
             a.more-link(href='/#{post.url}', target='_blank') 阅读全文
           div.clearfix
+
+  nav#pagination
+    if current_page < total_page
+      a.alignright.next(href='/page/#{(current_page + 1)}') 下一页
+    if current_page > 1
+      a.alignleft.prev(href='/page/#{(current_page - 1)}') 上一页
+
+

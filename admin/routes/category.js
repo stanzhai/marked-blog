@@ -2,8 +2,7 @@
 /*
  * Category Logic
  */
-var yaml = require('yamljs')
-  , config = require('../../config.yml')
+var config = require('../../config.yml')
   , Category = require('../../models').Category
   , CategoryDao = require('../../dao').CategoryDao;
 

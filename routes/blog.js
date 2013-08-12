@@ -4,11 +4,11 @@
  */
 
 var Post = require('../models').Post
-  , PostDao = require('../dao').PostDao;
+  , PostDao = require('../dao').PostDao
+  , config = require('../config.yml');
 
 exports.index = function(req, res){
-  var title = '首页';
-  var page_index = req.params.page_index || 1;
+  var page_index = parseInt(req.params.page_index || '1');
   var keywords = req.query.search || '';
   keywords = decodeURI(keywords);
 
@@ -20,19 +20,35 @@ exports.index = function(req, res){
     search.$or = [{title: reg}, {abstract: reg}];
   }
 
-  // limit fields return
-  var fields = {title: 1, url: 1, create_at: 1, public: 1, views: 1, abstract: 1};
-  // search options
-  var opt = {sort: {create_at: -1}, skip: (page_index - 1) * 20, limit: 20};
-
-  PostDao.find(search, fields, opt, function (err, data) {
+  PostDao.count(search, function (err, count) {
     if (err) {
-      // error 
 
     } else {
-      res.render('index', { posts: data, title: title}); 
+      var page_size = config.per_page;
+      // total post list page count
+      var pages = count / page_size + count % page_size;
+      // limit fields return
+      var fields = {title: 1, url: 1, create_at: 1, public: 1, views: 1, abstract: 1};
+      // search options
+      var opt = {sort: {create_at: -1}, skip: (page_index - 1) * page_size, limit: page_size};
+
+      PostDao.find(search, fields, opt, function (err, data) {
+        if (err) {
+          // error 
+
+        } else {
+          var indexTitle = page_index == 1 ? '首页' : '';
+          var preTitle = keywords != '' ? '搜索:' + keywords : indexTitle;
+          var title = page_index == 1 ? preTitle : preTitle + '第 ' + page_index + ' 页';
+
+          var render_data = { posts: data, title: title, current_page: page_index, total_page: pages};
+          res.render('index', render_data); 
+        }
+      });
+
     }
   });
+  
 };
 
 // get post by url

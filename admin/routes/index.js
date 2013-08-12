@@ -16,7 +16,7 @@ module.exports = function(app) {
 
   console.log(config.admin_url);
   // All of the following request requires authentication
-  //app.all('*', auth);
+  app.all('*', auth);
 
   app.get('/', post.index);
   // category

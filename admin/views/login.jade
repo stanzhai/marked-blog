@@ -10,5 +10,9 @@ html
         h2.form-signin-heading #{__('loginInfo')}
         input.input-block-level(type="text", placeholder="#{__('userName')}", name="user")
         input.input-block-level(type="password", placeholder="#{__('password')}", name="password")
-        button.btn.btn-large.btn-primary(type="submit") #{__('login')}
+        p
+          button.btn.btn-large.btn-primary(type="submit") #{__('login')}
+
+        if msg
+          div.alert.alert-error= msg
 
