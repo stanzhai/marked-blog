@@ -3,6 +3,7 @@
  */
 
 var mongoose = require('mongoose')
+  , moment = require('moment')
   , md = require('../../utils/markdown')
   , Schema = mongoose.Schema
   , ObjectId = Schema.ObjectId;
@@ -10,6 +11,7 @@ var mongoose = require('mongoose')
 var Post = new Schema({
     title: {type: String, index: true}
   , url: {type: String, index: true}
+  , abstract: {type: String, index: true}
   , content: String
   , tags: [String]
   , categories: [String]
@@ -21,8 +23,18 @@ var Post = new Schema({
   , views: {type:Number, default: 0}
 });
 Post.virtual('html').get(function() {
-    return md(this.content);
+  return md(this.content || '');
 });
+Post.virtual('abstract_html').get(function() {
+  return md(this.abstract || '');
+});
+Post.virtual('create').get(function() {
+  return moment(this.create_at).format('YYYY/MM/DD');
+});
+Post.virtual('update').get(function() {
+  return moment(this.update_at).format('YYYY/MM/DD');
+});
+
 /**
  * find by tag
  */

@@ -45,6 +45,14 @@ exports.create = function(req, res) {
   var post = new Post(req.body);
   post.title = post.title || 'Untitled' + moment(new Date()).format('YYYY-MM-DD_HH:mm:ss');;
   post.url = post.url || post.title;
+  // extract abstract
+  if (!post.abstract) {
+    var regex = /<!--\s*more\s*-->/;
+    var index = post.content.search(regex);
+    if (index != -1) {
+      post.abstract = post.content.substring(0, index);
+    }
+  }
 
   PostDao.create(post, function (result) {
     res.send(result);

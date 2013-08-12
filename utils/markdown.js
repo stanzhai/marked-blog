@@ -91,7 +91,7 @@ var defaults = {
   sanitize: false,
   // 使用higlight处理代码块
   highlight: function(code, lang){
-    return highlight(code, {lang: lang, gutter: false});
+    return highlight(code, {lang: lang});
   }
 };
 

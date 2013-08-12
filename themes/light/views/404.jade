@@ -1,8 +1,12 @@
 extends layout
 
 block content
-  h1
-    a(href='/')= site_name
-    = ' >> ' + title
-  p(style='text-align:center;') 
-    img(src='/images/404.jpg')
+  article.post
+    div.post-content
+      header
+        div.icon
+        h1.title= title
+
+      div.entry
+        p(style='text-align:center;') 
+          img(src='/images/404.jpg')
