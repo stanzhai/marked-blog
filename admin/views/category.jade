@@ -105,7 +105,7 @@ block content
   div#editCategory.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="modalLabel", aria-hidden="true")
     div.modal-header
       button.close(data-dismiss="modal", aria-hidden="true") &times;
-      h3#modalLabel 编辑分类
+      h3#modalLabel #{__('edit')}
     div.modal-body
       form.form-horizontal(data-bind="submit: $root.saveOrUpdate")
         input(type="hidden", data-bind="value: category()._id")

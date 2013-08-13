@@ -8,7 +8,7 @@ var config = require('../../config.yml')
 
 // get category index page
 exports.index = function(req, res){
-  res.render('category');
+  res.render('category', {title: res.__('category')});
 };
 
 // get category list info

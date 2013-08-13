@@ -1,7 +1,7 @@
 doctype 5
 html
   head
-    title= title
+    title= (title + ' - Marked-Blog')
     link(rel='stylesheet', href='#{admin_url}/bootstrap/css/bootstrap.css')
     link(rel='stylesheet', href='#{admin_url}/css/style.css')
     link(rel='stylesheet', href='#{admin_url}/css/messenger.css')
@@ -24,11 +24,11 @@ html
             a(href='#{admin_url}/') Marked-Blog
           ul.nav.nav-list.mb-sidenav.affix(style='opacity: 1; width: 280px;')
             li.active
-              a(href='#{admin_url}/post') Posts
+              a(href='#{admin_url}/post') #{__('post')}
             li
-              a(href='#{admin_url}/category') Category
+              a(href='#{admin_url}/category') #{__('category')}
             li
-              a(href='#{admin_url}/settings') Settings
+              a(href='#{admin_url}/settings') #{__('settings')}
           a.nav-toggle.toggle-bar
 
         div.mb-sidebar-mini
@@ -37,9 +37,9 @@ html
         div.span9.mb-content
           div.common-link
             block links
-            a.home(href='/', target='_blank') Home
-            a.logout(href='#{admin_url}/logout') Logout
-          h1.title 测试
+            a.home(href='/', target='_blank') #{__('home')}
+            a.logout(href='#{admin_url}/logout') #{__('logout')}
+          h1.title= title
           hr.title-hr
           block content
 
@@ -50,3 +50,12 @@ html
     $(document).ajaxError(function (event, xhr, ajaxSettings, thrownError) {
       $.globalMessenger().post(JSON.parse(xhr.responseText).msg);
     });
+    $(document).ready(function () {
+      $('ul.nav a').each(function () {
+        // set li the active class
+        if ($(this).href == location.pathname) {
+          $('ul.nav li').removeClass('active');
+          $(this).parent().setClass('active');
+        }
+      });
+    })

@@ -5,7 +5,8 @@ var auth = require('../../utils/auth')
   , login = require('./login')
   , admin = require('./admin')
   , category = require('./category')
-  , post = require('./post');
+  , post = require('./post')
+  , settings = require('./settings');
 
 module.exports = function(app) {
   var config = app.get('config');
@@ -14,7 +15,6 @@ module.exports = function(app) {
   app.post('/login', login.post);
   app.get('/logout', login.out);
 
-  console.log(config.admin_url);
   // All of the following request requires authentication
   app.all('*', auth);
 
@@ -32,4 +32,6 @@ module.exports = function(app) {
   app.post('/post', post.create);
   app.put('/post', post.edit);
   app.delete('/post', post.delete);
+  // settings
+  app.get('/settings', settings.get);
 };

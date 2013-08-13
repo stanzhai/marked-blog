@@ -4,12 +4,23 @@ block header
   title= post.title
 
   link(rel="stylesheet", href="#{admin_url}/css/post.css")
+  style.
+    #editor {
+      resize:vertical; 
+      overflow:auto; 
+      border:1px solid silver; 
+      border-radius:5px; 
+      min-height:100px;
+      box-shadow: inset 0 0 10px silver;
+      padding:1em;
+    }
+
   script(type="text/javascript", src="#{admin_url}/js/knockout-2.2.1.js")
   script(type="text/javascript", src="#{admin_url}/js/ace.js")
   script(type="text/javascript", src="#{admin_url}/js/keybinding-vim.js")
   script(type="text/javascript", src="#{admin_url}/js/theme-dreamweaver.js")
   script(type="text/javascript", src="#{admin_url}/js/mode-markdown.js")
-  script(type="text/javascript")
+  script(type="text/javascript").
     
     $(document).ready(function () {
       var editor = ace.edit('editor');
@@ -39,16 +50,16 @@ block header
     });
 
 block links
-  a.black(href='#') Save
+  a.black(href='#') #{__('save')}
 
 block content
   // edit post 
   form#editPost(method='post')
     input#postId(type="hidden", name="_id", value="#{post._id}")
-    label 标题
+    label #{__('title')}
     input.input-block-level(type="text", name="title", value="#{post.title}")
     div(style='display: none;')
       label url
       input(type="text", name="url", value="#{post.url}")
-    label 正文
+    label #{__('content')}
     div#editor.input-block-level= post.content

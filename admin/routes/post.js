@@ -19,7 +19,7 @@ exports.index = function(req, res) {
       var date = moment(post.create_at).format('YYYY-MM-DD HH:mm:ss');
       post.create_date = date;
     };
-    res.render('post', { posts: data });
+    res.render('post', { posts: data, title: res.__('posts') });
   });
 };
 
@@ -27,16 +27,19 @@ exports.index = function(req, res) {
 exports.createOrEdit = function(req, res) {
   var id = req.params.id;
   var emptyPost = {_id: '', url: '', title: '', content: ''};
+  // response data
+  var resData = {post: emptyPost, title: res.__('editPost')};
   if (id) {
     PostDao.findOne({_id: id}, function (err, post) {
       if (post) {
-        res.render('post_edit', {post: post});
+        resData.post = post;
+        res.render('post_edit', resData);
       } else {
-        res.render('post_edit', {post: emptyPost});
+        res.render('post_edit', resData);
       }
     });
   } else {
-    res.render('post_edit', {post: emptyPost});
+    res.render('post_edit', resData);
   }
 };
 

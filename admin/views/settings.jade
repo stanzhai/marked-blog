@@ -1,0 +1,12 @@
+extends layout
+
+block links
+  a.black(href='#') #{__('save')}
+
+block content
+  // edit settings
+  form#edit(method='post')
+    label #{__('title')}
+    input.input-block-level(type="text", name="site_name", value="#{config.site_name}")
+    label #{__('title')}
+    input.input-block-level(type="text", name="sub_title", value="#{config.sub_title}")

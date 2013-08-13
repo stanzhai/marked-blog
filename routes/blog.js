@@ -15,7 +15,6 @@ exports.index = function(req, res){
   // search conditions
   var search = {public: true};
   if (keywords != '') {
-    title = '搜索：' + keywords;
     eval('var reg = /.*' + keywords + '.*/');
     search.$or = [{title: reg}, {abstract: reg}];
   }

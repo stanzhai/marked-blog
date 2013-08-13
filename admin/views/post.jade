@@ -20,17 +20,17 @@ block header
     });
 
 block links
-  a.black(href='#{admin_url}/post/create') Add Post
+  a.black(href='#{admin_url}/post/create') #{__('addPost')}
 
 block content
   // display Post list
   table.table.table-bordered.table-striped(style='width: 100%')
     tr
-      th 标题
-      th 发布时间
-      th 浏览数
-      th 是否发布
-      th 操作
+      th #{__('title')}
+      th #{__('createAt')}
+      th #{__('view')}
+      th #{__('isPublic')}
+      th #{__('operate')}
     - each post in posts
       tr
         td
@@ -42,11 +42,11 @@ block content
           div.btn-group
             a.edit.btn.btn-small(href="#{admin_url}/post/edit/#{post._id}")
               i.icon-edit
-              &nbsp;编辑
+              &nbsp;#{__('edit')}
             button.btn.btn-small.dropdown-toggle(data-toggle="dropdown")
               span.caret
             ul.dropdown-menu.pull-right
               li
                 a.delete(href="#", data-id='#{post._id}')
                   i.icon-remove-sign
-                  &nbsp;删除
+                  &nbsp;#{__('delete')}
