@@ -26,7 +26,7 @@ app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
 app.use(express.session({ secret: 'marked-blog' }));
-app.use(express.bodyParser());
+app.use(express.bodyParser({ keepExtensions: true, uploadDir: uploadFolder }));
 app.use(express.methodOverride());
 app.use(require('stylus').middleware(publicFolder));
 app.use(express.static(publicFolder));

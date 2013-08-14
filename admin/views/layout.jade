@@ -53,9 +53,9 @@ html
     $(document).ready(function () {
       $('ul.nav a').each(function () {
         // set li the active class
-        if ($(this).href == location.pathname) {
+        if ($(this).attr('href') == location.pathname) {
           $('ul.nav li').removeClass('active');
-          $(this).parent().setClass('active');
+          $(this).parent().addClass('active');
         }
       });
     })

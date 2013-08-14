@@ -25,6 +25,12 @@ block content
     div#uyan_frame
     script#UYScript(type="text/javascript", src="http://v1.uyan.cc/js/iframe.js?UYUserId=1715390", async="")
 
+  nav#pagination
+    if prev
+      a.alignleft.prev(href='/#{prev.url}')= prev.title
+    if next
+      a.alignright.next(href='/#{next.url}')= next.title
+
 block footer
   script(src="/js/jquery.imagesloaded.min.js")
   script(src="/js/gallery.js")

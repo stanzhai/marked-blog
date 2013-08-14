@@ -47,6 +47,16 @@ block header
         }
         return false;
       });
+
+      $('#save').click(function () {
+        $('#uploadFile').submit();
+      });
+
+      // the upload file callback
+      window.fileUploaded = function (filePath) {
+        editor.insert(filePath);
+      };
+
     });
 
 block links
@@ -62,4 +72,24 @@ block content
       label url
       input(type="text", name="url", value="#{post.url}")
     label #{__('content')}
+    // edit controls
+    div#editControls.span9(style='padding:5px;')
+      div.btn-group
+        a.btn(data-toggle="modal", data-target="#uploadModal")
+          i.icon-paste
     div#editor.input-block-level= post.content
+
+  // upload file modal dialog
+  div#uploadModal.modal.hide.fade(tabindex="-1", role="dialog", aria-labelledby="modalLabel", aria-hidden="true")
+    div.modal-header
+      button.close(data-dismiss="modal", aria-hidden="true") &times;
+      h3#modalLabel #{__('edit')}
+    div.modal-body
+      iframe#post_frame(name='post_frame', style="display:none;", mce_style="display:none;")
+      form#uploadFile.form-horizontal(method='post', action='#{admin_url}/file', target='post_frame', enctype="multipart/form-data")
+        div.control-group
+          label.control-label(for="upload") #{__('cateName')}
+          div.controls
+            input#upload(type="file", name="upload", placeholder="#{__('cateName')}")
+    div.modal-footer
+      a#save.btn.btn-primary(href="#", data-dismiss="modal") #{__('save')}

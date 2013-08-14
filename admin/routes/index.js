@@ -6,6 +6,7 @@ var auth = require('../../utils/auth')
   , admin = require('./admin')
   , category = require('./category')
   , post = require('./post')
+  , file = require('./file')
   , settings = require('./settings');
 
 module.exports = function(app) {
@@ -32,6 +33,8 @@ module.exports = function(app) {
   app.post('/post', post.create);
   app.put('/post', post.edit);
   app.delete('/post', post.delete);
+  // file
+  app.post('/file', file.upload);
   // settings
   app.get('/settings', settings.get);
 };
