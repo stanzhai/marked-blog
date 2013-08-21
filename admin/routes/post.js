@@ -64,6 +64,7 @@ exports.create = function(req, res) {
 
 // edit post 
 exports.edit = function (req, res) {
+
   var post = req.body;
   post.title = post.title || 'Untitled' + moment(new Date()).format('YYYY-MM-DD_HH:mm:ss');;
 
@@ -77,7 +78,6 @@ exports.edit = function (req, res) {
         res.send('ok');
       }
   });
-
 }
 
 exports.delete = function (req, res) {

@@ -20,12 +20,13 @@ per_page: 10
 # Database
 ## Marked Blog uses MongoDB as database server
 ## For Dev: mongodb://<user>:<password>@widmore.mongohq.com:10010/marked-blog
+## For Dev2: mongodb://<dbuser>:<dbpassword>@ds027748.mongolab.com:27748/marked-blog
 mongodb:
-  host: localhost
-  port: 27017
+  host: ds027748.mongolab.com
+  port: 27748
   db_name: marked-blog
-  user_name: 
-  password: 
+  user_name: test
+  password: test
 
 # Server
 ## Marked Blog uses Connect as a server

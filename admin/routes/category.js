@@ -15,9 +15,8 @@ exports.index = function(req, res){
 exports.list = function(req, res){
   CategoryDao.getAll(function (err, data) {
     res.send(data);
-  })
+  });
 };
-
 
 // add category
 exports.create = function(req, res) {
