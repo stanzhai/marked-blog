@@ -22,11 +22,11 @@ per_page: 10
 ## For Dev: mongodb://<user>:<password>@widmore.mongohq.com:10010/marked-blog
 ## For Dev2: mongodb://<dbuser>:<dbpassword>@ds027748.mongolab.com:27748/marked-blog
 mongodb:
-  host: ds027748.mongolab.com
-  port: 27748
+  host: localhost
+  port: 27017
   db_name: marked-blog
-  user_name: test
-  password: test
+  user_name: 
+  password: 
 
 # Server
 ## Marked Blog uses Connect as a server

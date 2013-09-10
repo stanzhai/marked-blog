@@ -1,6 +1,6 @@
 
 /**
- * Module dependencies.
+ * marked-blog server based on express.
  */
 
 var express = require('express')
