@@ -1,20 +1,71 @@
+
 /**
- * start marked-blog server as a cluster
+ * Module dependencies.
  */
-var cluster = require('cluster');
-var numCPUs = require('os').cpus().length;
 
-if (cluster.isMaster) {
-  // Fork workers.
-  for (var i = 0; i < numCPUs; i++) {
-    cluster.fork();
-  }
+var render = require('./lib/render');
+var logger = require('koa-logger');
+var route = require('koa-route');
+var parse = require('co-body');
+var koa = require('koa');
+var app = koa();
 
-  cluster.on('exit', function(worker, code, signal) {
-    console.log('worker ' + worker.process.pid + ' died');
-  });
-} else {
-  // Code to run if we're in a worker process
-  require('./app');
-  console.log('Worker ' + cluster.worker.id + ' running!');
+// "database"
+
+var posts = [];
+
+// middleware
+
+app.use(logger());
+
+// route middleware
+
+app.use(route.get('/', list));
+app.use(route.get('/post/new', add));
+app.use(route.get('/post/:id', show));
+app.use(route.post('/post', create));
+
+// route definitions
+
+/**
+ * Post listing.
+ */
+
+function *list() {
+  this.body = yield render('list', { posts: posts });
 }
+
+/**
+ * Show creation form.
+ */
+
+function *add() {
+  this.body = yield render('new');
+}
+
+/**
+ * Show post :id.
+ */
+
+function *show(id) {
+  var post = posts[id];
+  if (!post) this.throw(404, 'invalid post id');
+  this.body = yield render('show', { post: post });
+}
+
+/**
+ * Create a post.
+ */
+
+function *create() {
+  var post = yield parse(this);
+  var id = posts.push(post) - 1;
+  post.created_at = new Date;
+  post.id = id;
+  this.redirect('/');
+}
+
+// listen
+
+app.listen(3000);
+console.log('listening on port 3000');
