@@ -4,9 +4,9 @@
  */
 var async = require('async')
   , render = require('../lib/render')
-  , Post = require('../models').Post
-  , PostDao = require('../dao').PostDao
-  , config = require('../config.yml');
+  , Post = require('../lib/models').Post
+  , PostDao = require('../lib/dao').PostDao
+  , config = require('../config');
 
 exports.index = function *(page_index){
   var page_index = parseInt(page_index || '1');
