@@ -15,7 +15,7 @@
     "xmlrpc": "~1.1.0",
     "koa": "~0.6.0",
     "koa-logger": "~1.2.0",
-    "koa-static": "~1.4.3",
+    "koa-static": "~1.4.5",
     "koa-route": "~1.1.4",
     "co-views": "~0.2.0",
     "co-body": "0.0.1",

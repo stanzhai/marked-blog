@@ -2,11 +2,14 @@
 /*
  * GET blog page.
  */
-var async = require('async')
-  , render = require('../lib/render')
+var path = require('path')
+  , views = require('../lib/render')
   , Post = require('../lib/models').Post
   , PostDao = require('../lib/dao').PostDao
   , config = require('../config');
+
+var viewFolder = path.join(__dirname, '../themes', config.theme, 'views');
+var render = views(viewFolder);
 
 exports.index = function *(page_index){
   var page_index = parseInt(page_index || '1');
@@ -38,7 +41,7 @@ exports.index = function *(page_index){
   var title = page_index == 1 ? preTitle : preTitle + '第 ' + page_index + ' 页';
 
   var render_data = { posts: posts, title: title, current_page: page_index, total_page: pages};
-  this.body = yield render('list', render_data); 
+  this.body = yield render('index', render_data); 
 };
 
 // get post by url
