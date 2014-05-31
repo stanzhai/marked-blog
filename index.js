@@ -1,6 +1,6 @@
 
 /**
- * Module dependencies.
+ * marked-blog server based on koa.
  */
 var logger = require('koa-logger')
   , route = require('koa-route')
@@ -8,6 +8,7 @@ var logger = require('koa-logger')
   , koa = require('koa')
   , routes = require('./routes')
   , blog = require('./routes/blog')
+  , config = require('./config')
   , app = koa();
 
 app.use(logger());
@@ -16,5 +17,6 @@ routes(app);
 // post page routes
 app.use(blog.posts);
 
-app.listen(3000);
-console.log('listening on port 3000');
+var port = process.env.PORT || config.port;
+app.listen(port);
+console.log('marked blog start listening on port %d', port);
