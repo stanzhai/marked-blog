@@ -2,9 +2,10 @@
 /*
  * GET home page.
  */
-var blog = require('./blog');
+var blog = require('./blog')
+  , route = require('koa-route');
 
 module.exports = function(app) {
-  app.get('/', blog.index);
-  app.get('/page/:page_index', blog.index);
+  app.use(route.get('/', blog.index));
+  app.use(route.get('/page/:page_index', blog.index));
 };
