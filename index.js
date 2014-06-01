@@ -15,8 +15,10 @@ app.use(logger());
 
 var publicFolder = path.join(__dirname, 'themes', config.theme, 'public');
 var uploadFolder = path.join(__dirname, 'uploads');
-app.use(static(publicFolder));
+var commonPublicFolder = path.join(__dirname, 'public');
 app.use(static(uploadFolder));
+app.use(static(publicFolder));
+app.use(static(commonPublicFolder));
 // blog page routes
 routes(app);
 // post page routes
