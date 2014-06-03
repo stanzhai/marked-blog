@@ -22,7 +22,7 @@ module.exports = {
   logger_format: '',
 
   // Theme
-  theme: 'simple',
+  theme: 'light',
 
   // Url
   url: 'http://blog.zhaishidan.cn',
