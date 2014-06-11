@@ -5,7 +5,7 @@
 	padding:0;
 }
 body {
-	font: 13px "Helvetica Neue", Helvetica, "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei",sans-serif;
+	font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
 	line-height: 1.5em;
 	color: #000;
 	line-height: 30px;
@@ -38,14 +38,13 @@ pre {
 }
 
 a:link, a:visited {
-	color: #000;
+	color: #08c;
 	text-decoration:none;
-	border-bottom:#ef0050 1px dotted;
 }
 a:hover,a:active 
 {
-	color:#ef0050;
-	text-decoration:none;
+	color: #005580;
+	text-decoration: underline;
 }
 img.left 
 {
@@ -243,6 +242,9 @@ blockquote, pre
 	box-shadow: 0 1px 0 #e0e0e0;
 	margin: -20px -20px 20px -20px;
 	padding: 20px;
+}
+#content .abstract {
+	font-size: 14px;
 }
 #content .entry 
 {
