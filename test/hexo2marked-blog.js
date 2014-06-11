@@ -3,10 +3,11 @@ var yaml = require('yamljs')
   , moment = require('moment')
   , fs = require('fs')
   , path = require('path')
-  , Post = require('../models').Post
-  , PostDao = require('../dao').PostDao;
+  , md = require('../lib/markdown')
+  , Post = require('../lib/models').Post
+  , PostDao = require('../lib/dao').PostDao;
 
-var postsDir = 'D:\\Software\\cygwin\\home\\zhaishidan\\git\\hexoblog\\source\\_posts';
+var postsDir = 'E:\\网站\\hexoblog\\source\\_posts';
 //var postsDir = '/Users/stan/Documents/hexoblog/source/_posts';
 
 fs.readdir(postsDir, function (err, files) {
@@ -30,13 +31,14 @@ fs.readdir(postsDir, function (err, files) {
       var regex = /<!--\s*more\s*-->/;
       var index = post.content.search(regex);
       if (index != -1) {
-        post.abstract = post.content.substring(0, index);
+        post.abstract = md(post.content.substring(0, index) || '').replace(/<\/?[^>]*>/g, '');
       }
     }
 
-    PostDao.create(post);
+    PostDao.create(post, function () {
+      console.log(post.url + ' --> saved!');
+    });
 
-    console.log(post.url + ' --> saved!');
   };
   console.log('ok');
 })

@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  <div class="header">
+    <h1 class="title">{{ title }}</h1>
+    <div class="meta">{{ create }}</div>
+  </div>
+  <div class="entry">{{ html|raw }}</div>
+  <div>
+    <script type="text/javascript" src="http://v1.uyan.cc/js/iframe.js?UYUserId=1715390"></script>
+  </div>
+{% endblock %}
