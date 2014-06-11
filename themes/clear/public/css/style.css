@@ -247,9 +247,7 @@ blockquote, pre
 #content .entry 
 {
   clear:both;
-	padding-bottom: 20px;
 }
-
 #content .entry p
 {
 	font-size: 15px;
@@ -270,8 +268,6 @@ blockquote, pre
 	-webkit-border-radius: 3px;
 	border-radius: 3px;
 }
-
-
 .post .date {
 	float: right;
 	margin:5px 0 0 5px;
