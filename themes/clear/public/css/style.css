@@ -316,6 +316,12 @@ blockquote, pre
 	display: inline-block;
 }
 
+#discuss {
+	border-top: 20px solid #e5e5e5;
+	margin: 20px -21px 0px -21px;
+	padding: 20px 21px;
+}
+
 /* Footer */
 
 #footer {
