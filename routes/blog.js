@@ -12,13 +12,16 @@ var viewFolder = path.join(__dirname, '../themes', config.theme, 'views');
 var render = views(viewFolder);
 
 exports.index = function *(page_index){
-  var page_index = parseInt(page_index || '1');
+  var page_index = typeof(page_index) == 'string' ? parseInt(page_index) : 1;
+  if (page_index < 1) {
+    page_index = 1;
+  }
   var keywords = this.query.search || '';
   keywords = decodeURI(keywords);
 
   // search conditions
   var search = {public: true};
-  if (keywords != '') {
+  if (keywords) {
     eval('var reg = /.*' + keywords + '.*/');
     search.$or = [{title: reg}, {abstract: reg}];
   }
@@ -50,13 +53,6 @@ exports.posts = function *(next) {
   url = decodeURI(url);
   var post = yield PostDao.findOne({url: url, public: true});
   if (post) {
-    var fields = {url: 1, title: 1};
-    // search options
-    var opt = {sort: {create_at: -1}, limit: 1};
-    var search = {public: true, create_at: {$gt: post.create_at}};
-    post.prev = yield PostDao.find(search, fields, opt);
-    search = {public: true, create_at: {$lt: post.create_at}};
-    post.next = yield PostDao.find(search, fields, opt);
     // add view count
     PostDao.update({url: url}, {views: post.views + 1});
     // set the prev and next post

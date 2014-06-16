@@ -294,6 +294,28 @@ blockquote, pre
 	font-size: 0.9em;
 	color:#999;
 }
+
+/* Pager */
+
+#pager {
+	text-align: center;
+}
+#pager a {
+	display: inline-block;
+	border: 1px solid #ccc;
+	width: 80px;
+	line-height: 25px;
+	background-color: #F5F5F5;
+}
+#pager a:hover {
+	background-color: #ddd;
+	text-decoration: none;
+}
+#pager span {
+	margin: 0 10px;
+	display: inline-block;
+}
+
 /* Footer */
 
 #footer {

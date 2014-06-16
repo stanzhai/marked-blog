@@ -1,7 +1,8 @@
-{% extends 'layout.html' %}
+{% if !isPjax %}
+  {% extends 'layout.html' %}
+{% endif %}
 
-{% block title %}
-{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
   {% for post in posts %}
@@ -13,4 +14,13 @@
       <div class="abstract">{{ post.abstract }}</div>
     </div>
   {% endfor %}
+  <div id="pager">
+  {% if current_page == 1 %}
+    <a href="/page/{{ current_page + 1}}">下一页 →</a>
+  {% else %}
+    <a href="/page/{{ current_page - 1}}">← 上一页</a>
+    <span>第 {{ current_page }} 页</span>
+    <a href="/page/{{ current_page + 1}}">下一页 →</a>
+  {% endif %}
+  </div>
 {% endblock %}
