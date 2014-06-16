@@ -6,6 +6,15 @@
   <link rel="stylesheet" type="text/css" href="/bower/nprogress/nprogress.css">
   <script type="text/javascript" src="/bower/nprogress/nprogress.js"></script>
   <script type="text/javascript" src="/bower/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower/jquery-pjax/jquery.pjax.js"></script>
+    <script type="text/javascript">
+  $(document).ready(function() { NProgress.start(); });
+  $(window).load(function() { NProgress.done(); });
+  $(document).on('pjax:send', function () { NProgress.start(); })
+  $(document).on('pjax:complete', function () { NProgress.done(); })
+  $(document).pjax('a', '#content', { fragment:'#content', timeout: 10000 });
+
+  </script>
 </head>
 <body>
   <div id="header">
@@ -24,9 +33,6 @@
   <div id="footer">
     (C) 2014 {{ author }}
   </div>
-  <script type="text/javascript">
-  $(document).ready(function() { NProgress.start(); });
-  $(window).load(function() { NProgress.done(); });
-  </script>
+
 </body>
 </html>

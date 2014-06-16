@@ -44,6 +44,7 @@ exports.index = function *(page_index){
   var title = page_index == 1 ? preTitle : preTitle + '第 ' + page_index + ' 页';
 
   var render_data = { posts: posts, title: title, current_page: page_index, total_page: pages};
+
   this.body = yield render('index', render_data); 
 };
 
