@@ -37,11 +37,11 @@ exports.index = function *(page_index){
   var posts = yield PostDao.find(search, fields, opt);
 
   // total post list page count
-  var pages = totalCount / page_size + totalCount % page_size;
-  if (page_index > totalCount) {
-    page_index = total_page;
+  var pages = Math.ceil(totalCount / page_size);
+  if (page_index > pages) {
+    page_index = pages;
   }
-  
+
   var indexTitle = page_index == 1 ? '首页' : '';
   var preTitle = keywords != '' ? '搜索:' + keywords : indexTitle;
   var title = page_index == 1 ? preTitle : preTitle + '第 ' + page_index + ' 页';
