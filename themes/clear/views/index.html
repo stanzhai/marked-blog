@@ -17,6 +17,8 @@
   <div id="pager">
   {% if current_page == 1 %}
     <a href="/page/{{ current_page + 1}}">下一页 →</a>
+  {% else if current_page == total_page %}
+    <a href="/page/{{ current_page - 1}}">← 上一页</a>
   {% else %}
     <a href="/page/{{ current_page - 1}}">← 上一页</a>
     <span>第 {{ current_page }} 页</span>
