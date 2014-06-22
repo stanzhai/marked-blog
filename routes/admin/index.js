@@ -2,14 +2,14 @@
  * Admin Module dependencies.
  */
 
-var express = require('express')
+var koa = require('koa')
   , yaml = require('yamljs') 
-  , config = require('../config.yml')
+  , config = require('../../config')
   , path = require('path')
   , i18n = require('i18n')
   , routes = require('./routes');
 
-var app = express();
+var app = koa();
 
 // Internationalization
 i18n.configure({
