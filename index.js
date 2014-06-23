@@ -8,6 +8,7 @@ var path = require('path')
   , koa = require('koa')
   , routes = require('./routes')
   , blog = require('./routes/blog')
+  , admin = require('./routes/admin')
   , config = require('./config')
   , app = koa();
 
@@ -21,6 +22,7 @@ app.use(static(publicFolder));
 app.use(static(commonPublicFolder));
 // blog page routes
 routes(app);
+admin(app);
 // post page routes
 app.use(blog.posts);
 
