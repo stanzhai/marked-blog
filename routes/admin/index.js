@@ -2,6 +2,7 @@
  * Admin Module dependencies.
  */
 
+/*
 var koa = require('koa')
   , config = require('../../config')
   , path = require('path')
@@ -28,3 +29,5 @@ routes(app);
 module.exports = function (parent) {
   parent.use(route.get('/', app));
 };
+*/
+module.exports = require('./routes');

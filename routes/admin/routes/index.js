@@ -4,13 +4,14 @@
 
 var route = require('koa-route')
   , path = require('path')
-  , views = require('../../../lib/render');
+  , views = require('../../../lib/render')
+  , config = require('../../../config');
 
 var viewFolder = path.join(__dirname, '../views');
 var render = views(viewFolder);
 
 module.exports = function (app) {
-  app.use(route.get('/', function *() {
+  app.use(route.get(config.admin_url, function *() {
     this.body = yield render('index', {}); 
   }));
 }
