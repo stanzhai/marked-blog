@@ -28,9 +28,14 @@
   <script type="text/javascript">
   $(document).ready(function() { NProgress.start(); });
   $(window).load(function() { NProgress.done(); });
-  $(document).on('pjax:send', function () { NProgress.start(); })
-  $(document).on('pjax:complete', function () { NProgress.done(); })
+  $(document).on('pjax:send', function () { NProgress.start(); });
+  $(document).on('pjax:complete', function () { NProgress.done(); });
   $(document).pjax('a', '#content', { fragment:'#content', timeout: 10000 });
+  $(document).on('pjax:end', function () { 
+    if (location.pathname != '/') {
+      $.getScript('http://v2.uyan.cc/code/uyan.js?uid=1715390');
+    }
+  });
   </script>
 </body>
 </html>
