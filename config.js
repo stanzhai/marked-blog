@@ -3,8 +3,8 @@
  */
 module.exports = {
   // Site Info
-  site_name: 'StanZhai::Blog',
-  sub_title: '好记性不如烂键盘！',
+  siteName: 'StanZhai::Blog',
+  subTitle: '好记性不如烂键盘！',
   description: '翟士丹的技术博客，爱编码，爱生活，有梦想，不抱怨。',
   author: 'StanZhai 翟士丹',
   email: 'stanzhai@outlook.com',
@@ -15,11 +15,10 @@ module.exports = {
   // You can customize the logger format as defined in
   // http://www.senchalabs.org/connect/logger.html
   port: 4000,
-  admin_url: '/admin',
-  admin_user: 'admin',
-  admin_password: 'admin',
+  adminUrl: '/admin',
+  adminUser: 'admin',
+  adminPassword: 'admin',
   logger: false,
-  logger_format: '',
 
   // Theme
   theme: 'clear',
@@ -30,8 +29,8 @@ module.exports = {
   permalink: ':year/:month/:day/:title/',
 
   // Pagination
-  // Set per_page to 0 to disable pagination
-  per_page: 10,
+  // Set perPage to 0 to disable pagination
+  perPage: 10,
 
   // Database
   // Marked Blog uses MongoDB as database server

@@ -1,30 +1,46 @@
-
 /**
- * marked-blog staticr based on koa.
+ * marked-blog server based on koa.
  */
 var path = require('path')
-  , logger = require('koa-logger')
-  , static = require('koa-static')
   , koa = require('koa')
+  , router = require('koa-router')
+  , logger = require('koa-logger')
+  , serve = require('koa-static')
+  , render = require('koa-ejs')
+  , gzip = require('koa-gzip')
+  , mount = require('koa-mount')
   , routes = require('./routes')
-  , blog = require('./routes/blog')
-  , admin = require('./routes/admin')
+  , admin = require('./admin')
   , config = require('./config')
   , app = koa();
 
-app.use(logger());
+var ejsConfig = {
+  root: path.join(__dirname, 'themes', config.theme, 'views'),
+  layout: 'layout',
+  viewExt: 'html',
+  cache: false,
+  locals: { 
+    siteName: config.siteName, 
+    subTitle: config.subTitle,
+    author: config.author
+  },
+  debug: true
+};
+render(app, ejsConfig);
 
 var publicFolder = path.join(__dirname, 'themes', config.theme, 'public');
 var uploadFolder = path.join(__dirname, 'uploads');
 var commonPublicFolder = path.join(__dirname, 'public');
-app.use(static(uploadFolder));
-app.use(static(publicFolder));
-app.use(static(commonPublicFolder));
+
+app.use(logger());
+app.use(gzip());
+app.use(serve(uploadFolder));
+app.use(serve(publicFolder));
+app.use(serve(commonPublicFolder));
+app.use(router(app));
+app.use(mount(config.adminUrl, admin));
 // blog page routes
-routes(app);
-admin(app);
-// post page routes
-app.use(blog.posts);
+require('./routes')(app);
 
 var port = process.env.PORT || config.port;
 app.listen(port);

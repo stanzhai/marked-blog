@@ -4,26 +4,24 @@
   <meta name="keywords" content="翟士丹,Stan Zhai,StanZhai" />
   <meta name="description" content="翟士丹的技术博客，爱编码，爱生活，有梦想，不抱怨。" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  
-  <title>{% block title %}{% endblock %} - {{ site_name }}</title>
+  <title><% if (title) { %><%= title + ' - ' + siteName %><% } else { %><%= siteName %><% } %></title>
   <link rel="stylesheet" type="text/css" href="/css/style.css"/>
   <link rel="stylesheet" type="text/css" href="/bower/nprogress/nprogress.css"/>
 </head>
 <body>
   <div id="header">
     <div id="siteinfo">
-      <h1><a href="/">{{ site_name }}</a></h1>
-      <h3>{{ sub_title }}</h3>
+      <h1><a href="/"><%= siteName %></a></h1>
+      <h3><%= subTitle %></h3>
     </div>
     <div id="menu">
     </div>
   </div>
   <div id="content">
-    {% block content %}
-      <p>Missing content!</p>
-    {% endblock %}
+    <%- body %>
   </div>
   <div id="footer">
-    (C) 2014 {{ author }} | 京ICP备14020638号
+    (C) 2014 <%= author %> | 京ICP备14020638号
   </div>
   <script type="text/javascript" src="/bower/nprogress/nprogress.js"></script>
   <script type="text/javascript" src="/bower/jquery/dist/jquery.min.js"></script>

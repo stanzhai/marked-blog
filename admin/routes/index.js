@@ -2,19 +2,15 @@
  * admin pages.
  */
 
-var route = require('koa-route')
-  , path = require('path')
-  , views = require('../../../lib/render')
-  , config = require('../../../config');
+var path = require('path')
+  , autoMapRoutes = require('../../lib/mapRoutes')
+  , config = require('../../config');
 
-var viewFolder = path.join(__dirname, '../views');
-var render = views(viewFolder);
-
-module.exports = function (app) {
-  app.use(route.get(config.admin_url, function *() {
-    this.body = yield render('index', {}); 
-  }));
-}
+module.exports = function(app) {
+  app.get('/', function * (argument) {
+    this.body = 'test';
+  });
+};
 /*
 var auth = require('../../utils/auth')
   , login = require('./login')

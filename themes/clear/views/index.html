@@ -1,28 +1,21 @@
-{% if !isPjax %}
-  {% extends 'layout.html' %}
-{% endif %}
-
-{% block title %}{{ title }}{% endblock %}
-
-{% block content %}
-  {% for post in posts %}
-    <div class="post">
-      <h1 class="title">
-        <a href="/{{ post.url }}">{{ post.title }}</a>
-      </h1>
-      <div class="meta">{{ post.create }}</div>
-      <div class="abstract">{{ post.abstract }}</div>
-    </div>
-  {% endfor %}
-  <div id="pager">
-  {% if current_page == 1 %}
-    <a href="/page/{{ current_page + 1}}">下一页 →</a>
-  {% elseif current_page == total_page %}
-    <a href="/page/{{ current_page - 1}}">← 上一页</a>
-  {% else %}
-    <a href="/page/{{ current_page - 1}}">← 上一页</a>
-    <span>第 {{ current_page }} 页</span>
-    <a href="/page/{{ current_page + 1}}">下一页 →</a>
-  {% endif %}
+<% posts.forEach(function(post) { %>
+  <div class="post">
+    <h1 class="title">
+      <a href="/<%= post.url %>"><%= post.title %></a>
+    </h1>
+    <div class="meta"><%= post.create %></div>
+    <div class="abstract"><%= post.abstract %></div>
   </div>
-{% endblock %}
+<% }) %>
+
+<div id="pager">
+<% if (currentPage == 1) { %>
+  <a href="/home/page/<%= currentPage + 1%>">下一页 →</a>
+<% } else if (currentPage == totalPage) { %>
+  <a href="/home/page/<%= currentPage - 1%>">← 上一页</a>
+<% } else { %>
+  <a href="/home/page/<%= currentPage - 1%>">← 上一页</a>
+  <span>第 <%= currentPage %> 页</span>
+  <a href="/home/page/<%= currentPage + 1%>">下一页 →</a>
+<% } %>
+</div>
