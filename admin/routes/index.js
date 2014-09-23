@@ -6,11 +6,15 @@ var path = require('path')
   , autoMapRoutes = require('../../lib/mapRoutes')
   , config = require('../../config');
 
+var viewPath = path.join(__dirname, 'views');
+
 module.exports = function(app) {
-  app.get('/', function * (argument) {
-    this.body = 'test';
+  app.get('/', function *() {
+    yield this.render('index', {root: viewPath});
+    //this.body = 'test';
   });
 };
+
 /*
 var auth = require('../../utils/auth')
   , login = require('./login')

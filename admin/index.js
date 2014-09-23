@@ -11,6 +11,7 @@ var koa = require('koa')
 
 var app = koa();
 
+/*
 var ejsConfig = {
   root: path.join(__dirname, 'views'),
   layout: 'layout',
@@ -24,6 +25,7 @@ var ejsConfig = {
   debug: true
 };
 render(app, ejsConfig);
+*/
 
 app.use(gzip());
 app.use(serve(path.join(__dirname, '/public')));
