@@ -21,7 +21,7 @@ module.exports = {
   logger: false,
 
   // Theme
-  theme: 'clear',
+  theme: 'jacman',
 
   // Url
   url: 'http://blog.zhaishidan.cn',

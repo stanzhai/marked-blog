@@ -1,0 +1,22 @@
+<div id="main">
+<% posts.forEach(function(post) { %>
+<section class="post" itemscope="" itemprop="blogPost">
+  
+    <a href="/<%= post.url %>" title="<%= post.title %>" itemprop="url">
+  
+    <h1 itemprop="name"><%= post.title %></h1>
+    
+     
+      <p itemprop="description"><%= post.abstract %></p>
+      
+    
+    <time datetime="<%= post.create %>" itemprop="datePublished"><%= post.create %></time>
+  </a>
+</section>
+<% }) %>
+
+<nav id="page-nav" class="clearfix">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+  </nav>
+
+</div>
