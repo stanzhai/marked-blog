@@ -1,5 +1,6 @@
 .DS_Store
-lib-cov
+*_temp
+*tmp
 *.seed
 *.log
 *.csv
@@ -10,7 +11,5 @@ lib-cov
 
 pids
 logs
+lib
 results
-
-npm-debug.log
-node_modules
