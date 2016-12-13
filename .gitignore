@@ -11,5 +11,6 @@
 
 pids
 logs
-lib
+modules
 results
+config.lua
