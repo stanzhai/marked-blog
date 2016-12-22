@@ -12,7 +12,7 @@ return {
         },
         pool_config = {
             max_idle_timeout = 20000, -- 20s
-            pool_size = 50 -- connection pool size
+            pool_size = 50
         }
     }
 }
