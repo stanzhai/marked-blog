@@ -13,15 +13,15 @@ local function is_login(req)
     return false, nil
 end
 
-local function check_login(whitelist)
+local function check_login(white_list)
     return function(req, res, next)
-        local requestPath = req.path
+        local request_path = req.path
         local in_white_list = false
-        if requestPath == "/" then
+        if request_path == "/" then
             in_white_list = true
         else
-            for i, v in ipairs(whitelist) do
-                local match, err = smatch(requestPath, v)
+            for i, v in ipairs(white_list) do
+                local match, err = smatch(request_path, v)
                 if match then
                     in_white_list = true
                 end
