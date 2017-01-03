@@ -1,6 +1,8 @@
-local posts_route = require("app.routes.posts")
+local user_router = require("app.routes.user")
+local posts_router = require("app.routes.posts")
 
 return function(app)
-    app:use("/posts", posts_route())
+    app:use("/user", user_router())
+    app:use("/posts", posts_router())
 end
 

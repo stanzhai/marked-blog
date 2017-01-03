@@ -1,79 +1,52 @@
+local pwd_secret = require("app.config").pwd_secret
+local utils = require("app.libs.utils")
+local user_model = require("app.model.user")
 local lor = require("lor.index")
-local userRouter = lor:Router() -- 生成一个group router对象
+local user_router = lor:Router()
 
--- 按id查找用户
--- e.g. /query/123
-userRouter:get("/query/:id", function(req, res, next)
-    local query_id = tonumber(req.params.id) -- 从req.params取参数
+user_router:post("/login", function(req, res, next)
+    local username = req.body.username 
+    local password = req.body.password
 
-    if not query_id then
-        return res:render("user/info", {
-            desc = "Error to find user, path variable `id` should be a number. e.g. /user/query/123"
+    if not username or not password or username == "" or password == "" then
+        return res:json({
+            success = false,
+            msg = "用户名和密码不得为空."
         })
     end
 
-    -- 渲染页面
-    res:render("user/info", {
-        id = query_id, 
-        name = "user" .. query_id,
-        desc = "User Information"
-    })
-end)
+    local is_exist = false
+    local userid = 0
 
--- 删除用户
--- e.g. /delete?id=123
-userRouter:delete("/delete", function(req, res, next)
-    local id = req.query.id -- 从req.query取参数
-    if not id then
-        return res:html("<h2 style='color:red'>Error: query param id is required.</h2>")
-    end
+    password = utils.encode(password .. "#" .. pwd_secret)
+    local result, err = user_model:query(username, password)
 
-    -- 返回html
-    res:html("<span>succeed to delete user</span><br/>user id is:<b style='color:red'>" .. id .. "</b>")
-end)
-
--- 修改用户
--- e.g. /put/123?name=sumory
-userRouter:put("/put/:id", function(req, res, next)
-    local id = req.params.id  -- 从req.params取参数
-    local name = req.query.name -- 从req.query取参数
-
-    if not id or not name then
-        return res:send("error params: id and name are required.")
-    end
-
-    -- 返回文本格式的响应结果
-    res:send("succeed to modify user[" .. id .. "] with new name:" .. name)
-end)
-
--- 创建用户
-userRouter:post("/post", function(req, res, next)
-    local content_type = req.headers['Content-Type']
-
-    -- 如果请求类型为form表单或json请求体
-    if string.find(content_type, "application/x-www-form-urlencoded",1, true) or 
-        string.find(content_type, "application/json",1, true) then
-        local id = req.body.id -- 从请求体取参数
-        local name = req.body.name -- 从请求体取参数
-
-        if not id or not name then
-            return res:json({
-                success = false,
-                msg = "error params: id and name are required."
-            })
+    local user = {}
+    if result and not err then
+        if result and #result == 1 then
+            is_exist = true
+            user = result[1] 
+            userid = user.id
         end
+    else
+        is_exist = false
+    end
 
-        res:json({-- 返回json格式的响应体
-            success = true,
-            data = {
-                id = id,
-                name = name, 
-                desc = "succeed to create new user" .. id
-            }
+    if is_exist == true then
+        req.session.set("user", {
+            username = username,
+            userid = userid
         })
-    else -- 不支持其他请求体
-        res:status(500):send("not supported request Content-Type[" .. content_type .. "]")
+        return res:json({
+            success = true,
+            msg = "登录成功."
+        })
+    else
+        return res:json({
+            success = false,
+            msg = "用户名或密码错误，请检查!"
+        })
     end
 end)
 
-return userRouter
+return user_router

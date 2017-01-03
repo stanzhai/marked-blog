@@ -1,6 +1,7 @@
-local string_find = string.find
-local lor = require("lor.index")
+local config = require("app.config")
 local router = require("app.router")
+local access_controller = require("app.middleware.access_controller")
+local lor = require("lor.index")
 local app = lor()
 
 -- session和cookie支持，如果不需要可注释以下配置
@@ -11,9 +12,7 @@ app:use(mw_session({
     timeout = 3600 -- default session timeout is 3600 seconds
 }))
 
--- 自定义中间件1: 注入一些全局变量供模板渲染使用
-local mw_inject_version = require("app.middleware.inject_app_info")
-app:use(mw_inject_version())
+app:use(access_controller(config.white_list))
 
 router(app)
 

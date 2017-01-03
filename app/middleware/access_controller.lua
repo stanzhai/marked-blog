@@ -44,8 +44,8 @@ local function check_login(white_list)
                 res.locals.create_time = user.create_time
                 next()
             else
-                res:status(403):json({
-                    msg = "该操作需要先登录."
+                res:status(401):json({
+                    error = "该操作需要先登录."
                 })
             end
         end
