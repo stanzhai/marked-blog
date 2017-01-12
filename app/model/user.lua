@@ -3,13 +3,14 @@ local db = DB:new()
 
 local user_model = {}
 
-function user_model:new(username, password)
-    return db:query("insert into user(username, password) values(?,?)", 
-    	{username, password, avatar})
+function user_model:create(username, password)
+    local res, err = db:query("insert into user(username, password) values(?,?)", 
+    	{username, password})
+    return res, err
 end
 
 function user_model:query(username, password)
-   local res, err =  db:query("select * from user where username=? and password=?", {username, password})
+   local res, err = db:query("select * from user where username=? and password=?", {username, password})
    return res, err
 end
 
@@ -22,3 +23,5 @@ function user_model:query_by_username(username)
 
     return res[1], err
 end
+
+return user_model

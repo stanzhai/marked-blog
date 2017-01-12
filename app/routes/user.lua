@@ -4,6 +4,18 @@ local user_model = require("app.model.user")
 local lor = require("lor.index")
 local user_router = lor:Router()
 
+user_router:get("/add", function(req, res, next)
+    local username = req.query.username 
+    local password = req.query.password
+    
+    local r, err = user_model:create(username, password)
+    if r and not err then
+        return res:json({success = "test"})
+    else
+        return res:json({username, password, r, err})
+    end
+end)
+
 user_router:post("/login", function(req, res, next)
     local username = req.body.username 
     local password = req.body.password

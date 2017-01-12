@@ -45,7 +45,7 @@ local function check_login(white_list)
                 next()
             else
                 res:status(401):json({
-                    error = "该操作需要先登录."
+                    error = "you need login!"
                 })
             end
         end

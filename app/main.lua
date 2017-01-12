@@ -12,7 +12,7 @@ app:use(mw_session({
     timeout = 3600 -- default session timeout is 3600 seconds
 }))
 
-app:use(access_controller(config.white_list))
+-- app:use(access_controller(config.white_list))
 
 router(app)
 

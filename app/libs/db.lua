@@ -126,7 +126,7 @@ function DB:parse_sql(sql, params)
         tinsert(new_params, v)
     end
 
-    local t = split(sql,"?")
+    local t = split(sql, "?")
     local sql = compose(t, new_params)
 
     return sql
