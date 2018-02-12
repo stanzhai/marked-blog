@@ -4,15 +4,15 @@ git clone https://github.com/sumory/lor.git
 
 echo "checkout dependent version ..."
 cd lor
-git reset 3a309372a688c66626505a4b509997b512fcf85a --hard
+git reset 8ce6cb0f6f72e06d9900180e30cfd96408eb0aad --hard
 cd ..
 
-echo "install lib ..."
-LIB_PATH=modules
-rm -rf $LIB_PATH
-mkdir $LIB_PATH
-cp -r lor/lib/lor $LIB_PATH
-cp -r lor/resty $LIB_PATH
+echo "install modules ..."
+MODULES=modules
+rm -rf $MODULES
+mkdir $MODULES
+cp -r lor/lib/lor $MODULES
+cp -r lor/resty $MODULES
 rm -rf lor
 
 echo "done !"
