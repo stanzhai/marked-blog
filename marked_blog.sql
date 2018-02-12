@@ -20,12 +20,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
-# Dump of table posts
+# Dump of table post
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `posts`;
+DROP TABLE IF EXISTS `post`;
 
-CREATE TABLE `posts` (
+CREATE TABLE `post` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` varchar(36) NOT NULL,
   `title` varchar(150) NOT NULL,
@@ -36,50 +36,41 @@ CREATE TABLE `posts` (
   `featured` tinyint(1) NOT NULL DEFAULT '0',
   `page` tinyint(1) NOT NULL DEFAULT '0',
   `status` varchar(150) NOT NULL DEFAULT 'draft',
-  `language` varchar(6) NOT NULL DEFAULT 'en_US',
   `meta_title` varchar(150) DEFAULT NULL,
   `meta_description` varchar(200) DEFAULT NULL,
-  `author_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `published_at` datetime DEFAULT NULL,
-  `published_by` int(11) DEFAULT NULL,
   `visibility` varchar(150) NOT NULL DEFAULT 'public',
-  `mobiledoc` longtext,
-  `amp` mediumtext,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `posts_slug_unique` (`slug`)
+  UNIQUE KEY `post_slug_unique` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
-# Dump of table posts_tags
+# Dump of table post_tag
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `posts_tags`;
+DROP TABLE IF EXISTS `post_tag`;
 
-CREATE TABLE `posts_tags` (
+CREATE TABLE `post_tag` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `post_id` int(10) unsigned NOT NULL,
   `tag_id` int(10) unsigned NOT NULL,
   `sort_order` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `posts_tags_post_id_foreign` (`post_id`),
-  KEY `posts_tags_tag_id_foreign` (`tag_id`),
-  CONSTRAINT `posts_tags_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
-  CONSTRAINT `posts_tags_tag_id_foreign` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`)
+  KEY `post_tag_post_id_foreign` (`post_id`),
+  KEY `post_tag_tag_id_foreign` (`tag_id`),
+  CONSTRAINT `post_tag_post_id_foreign` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
+  CONSTRAINT `post_tag_tag_id_foreign` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
-# Dump of table tags
+# Dump of table tag
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `tags`;
+DROP TABLE IF EXISTS `tag`;
 
-CREATE TABLE `tags` (
+CREATE TABLE `tag` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `uuid` varchar(36) NOT NULL,
   `name` varchar(150) NOT NULL,
@@ -89,15 +80,12 @@ CREATE TABLE `tags` (
   `parent_id` int(11) DEFAULT NULL,
   `meta_title` varchar(150) DEFAULT NULL,
   `meta_description` varchar(200) DEFAULT NULL,
-  `created_at` datetime NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `visibility` varchar(150) NOT NULL DEFAULT 'public',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `tags_slug_unique` (`slug`)
+  UNIQUE KEY `tag_slug_unique` (`slug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 
