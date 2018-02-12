@@ -27,7 +27,6 @@ DROP TABLE IF EXISTS `post`;
 
 CREATE TABLE `post` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(36) NOT NULL,
   `title` varchar(150) NOT NULL,
   `slug` varchar(150) NOT NULL,
   `markdown` mediumtext,
@@ -72,7 +71,6 @@ DROP TABLE IF EXISTS `tag`;
 
 CREATE TABLE `tag` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(36) NOT NULL,
   `name` varchar(150) NOT NULL,
   `slug` varchar(150) NOT NULL,
   `description` varchar(200) DEFAULT NULL,

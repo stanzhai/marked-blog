@@ -5,4 +5,8 @@ posts_router:get('/', function (req, res, next)
     res:json({key = "1234"})
 end)
 
+posts_router:post('/', function (req, res, next) 
+    res:json({key = "1234"})
+end)
+
 return posts_router
